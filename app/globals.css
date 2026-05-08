@@ -1,26 +1,133 @@
 @import "tailwindcss";
 
+/* ─── ATENEA BRAND TOKENS ─── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand colors — extraídos del sitio oficial */
+  --navy:         #023044;   /* Primary — navbar, footer, hero, CTAs */
+  --navy-mid:     #034060;   /* Hover del navy */
+  --navy-light:   #0a4a6e;   /* Acento azul claro */
+  --coral:        #ef625e;   /* Accent — 'a' del logo, hover, links */
+  --coral-light:  #f2837f;   /* Hover del coral */
+  --coral-muted:  rgba(239, 98, 94, 0.1);
+  --coral-border: rgba(239, 98, 94, 0.3);
+
+  /* Backgrounds */
+  --bg:           #F0F5FA;   /* Body background */
+  --white:        #ffffff;   /* Cards, navbar */
+  --bg-subtle:    #e8eef5;   /* Hover en cards */
+
+  /* Text */
+  --cream:        #ebe6e2;   /* Texto sobre fondos oscuros */
+  --cream-dark:   #d4cdc8;   /* Bordes sobre oscuros */
+  --gray:         #334155;   /* Body text sobre claro */
+  --gray-mid:     #475569;   /* Texto secundario */
+  --gray-light:   #94a3b8;   /* Texto terciario, placeholders */
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  /* Spacing */
+  --section-pad:  90px;
+  --nav-height:   72px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ─── BASE ─── */
+html  { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  color: var(--gray);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+::selection { background: var(--coral); color: var(--white); }
+
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: var(--bg); }
+::-webkit-scrollbar-thumb  { background: var(--gray-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--coral); }
+
+*:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 2px;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up   { animation: fadeUp    0.65s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-in   { animation: fadeIn    0.5s  ease both; }
+.animate-slide-right { animation: slideRight 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-count-up  { animation: countUp   0.7s  cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Scroll-triggered: elementos comienzan ocultos, JS agrega .is-visible */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-100 { animation-delay: 0.1s; transition-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; transition-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; transition-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; transition-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; transition-delay: 0.5s; }
+
+/* ─── HELPERS ─── */
+.section-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--coral);
+  margin-bottom: 16px;
+}
+
+.divider {
+  width: 48px;
+  height: 2px;
+  background: var(--coral);
+  margin: 20px 0 40px;
+}
+
+/* ─── RICH TEXT ─── */
+.prose-atenea h2        { font-family: var(--font-display); font-size: 1.75rem; margin-bottom: 1rem; color: var(--navy); }
+.prose-atenea h3        { font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--navy); }
+.prose-atenea p         { color: var(--gray-mid); line-height: 1.8; margin-bottom: 1rem; }
+.prose-atenea ul        { list-style: none; padding: 0; }
+.prose-atenea ul li     { padding-left: 1.25rem; position: relative; color: var(--gray-mid); margin-bottom: 0.5rem; }
+.prose-atenea ul li::before { content: '—'; position: absolute; left: 0; color: var(--coral); }
+.prose-atenea strong    { color: var(--navy); font-weight: 500; }
+.prose-atenea a         { color: var(--coral); text-decoration: underline; text-underline-offset: 3px; }

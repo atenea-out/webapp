@@ -1,7 +1,26 @@
-import type { NextConfig } from "next";
+import { withPayload } from '@payloadcms/next/withPayload'
+import type { NextConfig } from 'next'
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+const baseConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+    ],
+  },
+}
 
-export default nextConfig;
+// withPayload generates Windows absolute paths for @payload-config
+// which Turbopack rejects with "windows imports are not implemented yet".
+// We intercept and replace with a relative path after the fact.
+const config = withPayload(baseConfig) as NextConfig
+
+if (config.experimental && 'enableServerFastRefresh' in config.experimental) {
+  delete (config.experimental as Record<string, unknown>).enableServerFastRefresh
+}
+
+if (config.turbopack && (config.turbopack as Record<string, unknown>).resolveAlias) {
+  const alias = (config.turbopack as Record<string, unknown>).resolveAlias as Record<string, string>
+  alias['@payload-config'] = './payload.config.ts'
+}
+
+export default config

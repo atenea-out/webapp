@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Atenea Outsourcing CMS
 
-## Getting Started
+Sitio corporativo de Atenea Outsourcing construido con Next.js, Payload CMS y Tailwind CSS.
 
-First, run the development server:
+## Stack
+
+- Next.js App Router
+- Payload CMS
+- SQLite para desarrollo local
+- Neon Postgres para produccion
+- Resend para email transaccional
+- Playwright y Vitest para pruebas
+
+## Desarrollo local
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev -- --port 3001
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrir:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Sitio: `http://localhost:3001`
+- Admin: `http://localhost:3001/admin`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Variables
 
-## Learn More
+Usar `.env.example` como referencia.
 
-To learn more about Next.js, take a look at the following resources:
+En local se puede usar:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```env
+PAYLOAD_SECRET=change-me-in-production
+DATABASE_URI=file:./atenea.db
+NEXT_PUBLIC_SITE_URL=http://localhost:3001
+RESEND_API_KEY=
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+En produccion, `DATABASE_URI` debe ser una connection string Postgres de Neon.
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+npm run test
+npm run test:e2e
+npm run test:all
+npm run seed
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+El deploy recomendado es GitHub + Coolify sobre Hostinger VPS, usando Neon como base de datos y un volumen persistente para uploads.
+
+Documentacion:
+
+- `docs/github-workflow.md`
+- `docs/deploy-coolify.md`
+- `docs/release-checklist.md`

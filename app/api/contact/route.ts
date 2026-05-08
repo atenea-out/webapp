@@ -1,0 +1,80 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { Resend } from 'resend'
+import { getSiteSettings } from '@/lib/queries'
+import {
+  CONTACT_RATE_LIMIT_MAX,
+  CONTACT_RATE_LIMIT_WINDOW_MS,
+  ContactPayload,
+  MAX_CONTACT_BODY_BYTES,
+  createContactEmail,
+  validateContactPayload,
+} from '@/lib/contact'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+const rateLimit = new Map<string, { count: number; resetAt: number }>()
+
+function getClientIp(req: NextRequest) {
+  const forwarded = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+  return forwarded || req.headers.get('x-real-ip') || 'unknown'
+}
+
+function checkRateLimit(key: string) {
+  const now = Date.now()
+  const current = rateLimit.get(key)
+
+  if (!current || current.resetAt <= now) {
+    rateLimit.set(key, { count: 1, resetAt: now + CONTACT_RATE_LIMIT_WINDOW_MS })
+    return true
+  }
+
+  if (current.count >= CONTACT_RATE_LIMIT_MAX) return false
+  current.count += 1
+  return true
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    if (req.headers.get('content-type')?.includes('application/json') !== true) {
+      return NextResponse.json({ error: 'Formato de solicitud invalido.' }, { status: 415 })
+    }
+
+    const contentLength = Number(req.headers.get('content-length') || 0)
+    if (contentLength > MAX_CONTACT_BODY_BYTES) {
+      return NextResponse.json({ error: 'El mensaje es demasiado largo.' }, { status: 413 })
+    }
+
+    if (!checkRateLimit(getClientIp(req))) {
+      return NextResponse.json({ error: 'Demasiados intentos. Intenta de nuevo mas tarde.' }, { status: 429 })
+    }
+
+    const payload = (await req.json()) as ContactPayload
+    const validation = validateContactPayload(payload)
+
+    if (validation.isBot) return NextResponse.json({ success: true })
+    if (!validation.data) {
+      return NextResponse.json({ error: validation.error || 'Solicitud invalida.' }, { status: 400 })
+    }
+
+    if (!process.env.RESEND_API_KEY) {
+      return NextResponse.json({ error: 'El servicio de contacto no esta configurado.' }, { status: 503 })
+    }
+
+    const { name, email, phone, service, message } = validation.data
+    const settings = await getSiteSettings()
+    const recipient = settings.email || 'info@atenea-outsourcing.com'
+    const emailContent = createContactEmail({ name, email, phone, service, message })
+
+    await resend.emails.send({
+      from: 'Atenea CMS <noreply@atenea-outsourcing.com>',
+      to: [recipient],
+      replyTo: email,
+      subject: emailContent.subject,
+      text: emailContent.text,
+      html: emailContent.html,
+    })
+
+    return NextResponse.json({ success: true })
+  } catch {
+    return NextResponse.json({ error: 'Error al enviar el mensaje. Intenta nuevamente.' }, { status: 500 })
+  }
+}

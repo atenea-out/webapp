@@ -104,6 +104,12 @@ export default async function HomePage() {
         ctaSecondaryHref={settings.heroCtaSecondaryHref}
         especialidades={heroEspecialidades}
         credits={heroCredits}
+        mediaMode={settings.heroMediaMode}
+        videoSrc={settings.heroVideoSrc}
+        posterSrc={settings.heroPosterSrc}
+        backgroundImageSrc={settings.heroBackgroundImageSrc}
+        overlayOpacity={settings.heroOverlayOpacity}
+        showFinancialOverlay={settings.heroShowFinancialOverlay}
       />
       <StatsBar stats={stats} />
       <QuienesSomos text={settings.quienesSomosText} valores={qsValores} />

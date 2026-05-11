@@ -4,7 +4,12 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { List, X, LockKey } from '@phosphor-icons/react'
+import {
+  ArrowRight,
+  List,
+  LockKey,
+  X,
+} from '@phosphor-icons/react'
 import { clsx } from 'clsx'
 
 type NavItem = { label: string; href: string }
@@ -47,12 +52,20 @@ export function Navbar({
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
+
   return (
     <>
       {/* ── Navbar navy, igual que el sitio original ── */}
       <nav
         className={clsx(
-          'fixed top-0 left-0 right-0 z-50 h-[72px]',
+          'fixed top-0 left-0 right-0 z-[90] h-[76px]',
           'flex items-center justify-between px-6 md:px-[60px]',
           'bg-[var(--navy)] border-b border-white/[0.08]',
           'transition-shadow duration-300',
@@ -64,15 +77,15 @@ export function Navbar({
           <Image
             src="/logo.png"
             alt="Atenea Outsourcing"
-            width={174}
-            height={58}
-            className="h-11 w-auto object-contain transition-opacity duration-200 group-hover:opacity-80"
+            width={208}
+            height={69}
+            className="h-[46px] w-auto object-contain transition-opacity duration-200 group-hover:opacity-80 md:h-[50px]"
             priority
           />
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-9">
+        <ul className="hidden lg:flex items-center gap-9">
           {navItems.map((item) => (
             <li key={item.href}>
               <Link
@@ -95,7 +108,7 @@ export function Navbar({
         </ul>
 
         {/* Desktop CTAs */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3">
           <Link
             href={portal.href}
             className="inline-flex items-center gap-2 px-4 py-2.5 text-white/70 text-[12px] font-medium tracking-[0.08em] uppercase rounded-sm border border-white/20 hover:text-white hover:border-white/50 transition-all duration-200"
@@ -113,9 +126,11 @@ export function Navbar({
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden p-1 text-white"
+          className="lg:hidden inline-flex h-11 w-11 items-center justify-center text-white transition-colors duration-200 hover:text-[var(--coral)]"
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-navigation"
         >
           {menuOpen ? <X size={24} /> : <List size={24} />}
         </button>
@@ -123,51 +138,97 @@ export function Navbar({
 
       {/* Mobile menu — también navy */}
       <div
+        id="mobile-navigation"
         className={clsx(
-          'fixed inset-0 z-40 bg-[var(--navy)] flex flex-col pt-[72px] px-6 pb-10',
-          'transition-all duration-300 md:hidden',
+          'fixed inset-0 z-[80] bg-[var(--navy)] flex flex-col pt-[76px] px-5 pb-5 overflow-hidden',
+          'transition-all duration-300 lg:hidden',
           menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none',
         )}
       >
-        <Image
-          src="/logo.png"
-          alt="Atenea Outsourcing"
-          width={140}
-          height={46}
-          className="h-9 w-auto mt-6 mb-2"
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(circle at 86% 18%, rgba(239,98,94,0.14) 0%, transparent 26%), linear-gradient(155deg, rgba(255,255,255,0.055) 0%, transparent 34%)',
+          }}
+          aria-hidden="true"
         />
-        <ul className="flex flex-col gap-1 mt-4">
-          {navItems.map((item) => (
-            <li key={item.href}>
+
+        <div className="relative flex min-h-full flex-col">
+          <div className="border-b border-white/[0.08] pb-3 pt-4">
+            <p className="text-[10px] font-medium uppercase tracking-[0.24em] text-[var(--coral)]">
+              Menu principal
+            </p>
+            <p className="mt-2 max-w-[310px] text-[13px] leading-[1.55] text-white/62">
+              Consultoria contable, tributaria y financiera para decisiones empresariales mas claras.
+            </p>
+          </div>
+
+          <ul className="mt-4 flex flex-col gap-1.5">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className={clsx(
+                    'group flex min-h-[52px] items-center gap-4 border px-4 py-2 transition-colors duration-200',
+                    pathname === item.href
+                      ? 'border-[var(--coral)]/45 bg-[var(--coral)]/10 text-white'
+                      : 'border-white/[0.08] bg-white/[0.03] text-white hover:border-white/20 hover:bg-white/[0.06]',
+                  )}
+                >
+                  <span
+                    className={clsx(
+                      'h-6 w-px shrink-0 bg-[var(--coral)]/45 transition-opacity duration-200 group-hover:opacity-100',
+                      pathname === item.href ? 'opacity-100' : 'opacity-0',
+                    )}
+                  />
+                  <span className="min-w-0 flex-1 font-[family-name:var(--font-display)] text-[22px] font-medium leading-none">
+                    {item.label}
+                  </span>
+                  <ArrowRight
+                    size={18}
+                    className="shrink-0 text-white/35 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[var(--coral)]"
+                  />
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className="pt-4">
+            <div className="grid grid-cols-2 gap-2">
               <Link
-                href={item.href}
-                className={clsx(
-                  'block py-4 border-b border-white/[0.08]',
-                  'font-[family-name:var(--font-display)] text-2xl font-medium',
-                  pathname === item.href ? 'text-[var(--coral)]' : 'text-white',
-                )}
+                href={portal.href}
+                onClick={() => setMenuOpen(false)}
+                className="flex min-h-11 items-center justify-center gap-2 border border-white/20 bg-white/[0.04] px-3 py-3 text-center text-[10px] font-medium uppercase tracking-[0.1em] text-white/78 transition-colors duration-200 hover:border-white/45 hover:bg-white/[0.08] hover:text-white"
               >
-                {item.label}
+                <LockKey size={14} weight="duotone" />
+                {portal.label}
               </Link>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-8 flex flex-col gap-3">
-          <Link
-            href={portal.href}
-            onClick={() => setMenuOpen(false)}
-            className="text-center px-6 py-3.5 text-white/80 text-[13px] font-medium tracking-[0.08em] uppercase rounded-sm border border-white/25 hover:border-white/50 hover:text-white transition-colors duration-200 flex items-center justify-center gap-2"
-          >
-            <LockKey size={14} weight="duotone" />
-            {portal.label}
-          </Link>
-          <Link
-            href={cta.href}
-            onClick={() => setMenuOpen(false)}
-            className="text-center px-6 py-3.5 bg-[var(--coral)] text-white text-[13px] font-medium tracking-[0.08em] uppercase rounded-sm hover:bg-[var(--coral-light)] transition-colors duration-200"
-          >
-            {cta.label}
-          </Link>
+              <Link
+                href={cta.href}
+                onClick={() => setMenuOpen(false)}
+                className="flex min-h-11 items-center justify-center gap-2 bg-[var(--coral)] px-3 py-3 text-center text-[10px] font-medium uppercase tracking-[0.1em] text-white shadow-[0_18px_36px_rgba(239,98,94,0.22)] transition-colors duration-200 hover:bg-[var(--coral-light)]"
+              >
+                {cta.label}
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+
+            <div className="mt-3 border-t border-white/[0.08] pt-3">
+              <Link
+                href="/politica-de-privacidad"
+                onClick={() => setMenuOpen(false)}
+                className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.12em] text-white/55 transition-colors duration-200 hover:text-white"
+              >
+                Política de privacidad
+                <ArrowRight size={14} />
+              </Link>
+              <p className="mt-1.5 text-[11px] leading-relaxed text-white/32">
+                Atenea Outsourcing. Todos los derechos reservados.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </>

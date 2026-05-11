@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { ArrowRight } from '@phosphor-icons/react/dist/ssr'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 
 type Valor = { title: string; description: string; imgSrc: string }
@@ -7,23 +6,23 @@ type Valor = { title: string; description: string; imgSrc: string }
 const defaultValores: Valor[] = [
   {
     title: 'Excelencia',
-    description: 'Estándares de calidad superiores en cada entregable, con procesos auditables y resultados verificables.',
-    imgSrc: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=2000&q=90&auto=format&fit=crop',
+    description: 'Estandares de calidad superiores en cada entregable, con procesos auditables y resultados verificables.',
+    imgSrc: '/media/images/quienes-excelencia.png',
   },
   {
     title: 'Confidencialidad',
-    description: 'Tratamiento seguro y estricto de la información financiera de cada cliente.',
-    imgSrc: 'https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=2000&q=90&auto=format&fit=crop',
+    description: 'Tratamiento seguro y estricto de la informacion financiera de cada cliente.',
+    imgSrc: '/media/images/quienes-confidencialidad.png',
   },
   {
     title: 'Compromiso',
     description: 'Relaciones de largo plazo basadas en resultados reales y confianza mutua.',
-    imgSrc: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=2000&q=90&auto=format&fit=crop',
+    imgSrc: '/media/images/quienes-compromiso.png',
   },
   {
-    title: 'Innovación',
-    description: 'Actualización permanente ante cambios normativos y avances tecnológicos del sector.',
-    imgSrc: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=2000&q=90&auto=format&fit=crop',
+    title: 'Innovacion',
+    description: 'Actualizacion permanente ante cambios normativos y avances tecnologicos del sector.',
+    imgSrc: '/media/images/quienes-innovacion.png',
   },
 ]
 
@@ -32,50 +31,15 @@ type QuienesSomosProps = {
   valores?: Valor[] | null
 }
 
-/**
- * Letras animadas — slide vertical con stagger CSS puro.
- * Cada letra tiene un container overflow-hidden.
- * El span interno contiene la letra dos veces en flex-col.
- * En hover: translate-y(-50%) sube exactamente una letra.
- * stagger: transitionDelay incremental por índice.
- */
-function AnimatedTitle({ text }: { text: string }) {
-  return (
-    <div className="flex flex-wrap leading-none mb-2" aria-label={text}>
-      {text.split('').map((char, i) => (
-        <span
-          key={i}
-          className="inline-block overflow-hidden"
-          style={{ height: '1.75rem' }}
-          aria-hidden="true"
-        >
-          <span
-            className="flex flex-col transition-transform duration-500 group-hover:-translate-y-1/2"
-            style={{ transitionDelay: `${i * 32}ms` }}
-          >
-            <span className="font-[family-name:var(--font-display)] text-[1.375rem] font-medium text-white leading-7">
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-            <span className="font-[family-name:var(--font-display)] text-[1.375rem] font-medium text-white leading-7">
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-          </span>
-        </span>
-      ))}
-    </div>
-  )
-}
-
 export function QuienesSomos({ text, valores: valoresProp }: QuienesSomosProps = {}) {
   const valores = valoresProp && valoresProp.length > 0 ? valoresProp : defaultValores
   const intro =
     text ||
-    'Firma especializada en soluciones integrales de contabilidad, finanzas y tributación con más de dos décadas de trayectoria.'
+    'Firma especializada en soluciones integrales de contabilidad, finanzas y tributacion con mas de dos decadas de trayectoria.'
+
   return (
     <section className="bg-white py-[var(--section-pad)] px-6 md:px-[60px]">
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 items-start">
-
-        {/* LEFT — Header */}
         <AnimateIn className="lg:sticky lg:top-28">
           <span className="section-tag">Sobre Nosotros</span>
           <h2
@@ -89,14 +53,10 @@ export function QuienesSomos({ text, valores: valoresProp }: QuienesSomosProps =
           </p>
         </AnimateIn>
 
-        {/* RIGHT — Cards 2×2 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {valores.map(({ title, description, imgSrc }, i) => (
             <AnimateIn key={title} delay={i * 70}>
-              {/* group para que CSS hover haga efecto en hijos */}
-              <div className="group relative h-56 md:h-64 w-full overflow-hidden cursor-pointer bg-[var(--navy)]">
-
-                {/* Imagen: B&W en desktop, color en mobile — scale en hover */}
+              <article className="group relative h-56 md:h-64 w-full overflow-hidden bg-[var(--navy)] border border-[var(--navy)]/10">
                 {imgSrc && (
                   <Image
                     src={imgSrc}
@@ -104,39 +64,42 @@ export function QuienesSomos({ text, valores: valoresProp }: QuienesSomosProps =
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     quality={90}
-                    className="object-cover transition-all duration-500 ease-out
-                               group-hover:scale-105
-                               md:grayscale group-hover:grayscale-0"
+                    className="object-cover transition-[filter,transform] duration-700 ease-out group-hover:scale-[1.025] md:grayscale md:saturate-[0.7] group-hover:grayscale-0 group-hover:saturate-100"
                   />
                 )}
 
-                {/* Overlay gradiente — más oscuro abajo para texto legible */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10 transition-opacity duration-500 group-hover:from-black/60" />
+                <div
+                  className="absolute inset-0 transition-opacity duration-700"
+                  style={{
+                    background:
+                      'linear-gradient(180deg, rgba(2,48,68,0.08) 0%, rgba(2,48,68,0.28) 42%, rgba(2,48,68,0.88) 100%)',
+                  }}
+                  aria-hidden="true"
+                />
+                <div
+                  className="absolute inset-0 opacity-70 mix-blend-color"
+                  style={{ background: 'rgba(2,48,68,0.18)' }}
+                  aria-hidden="true"
+                />
+                <div className="absolute inset-x-0 bottom-0 h-px bg-[var(--coral)]/45 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                {/* Contenido */}
-                <div className="relative z-10 flex h-full flex-col justify-between p-5">
-
-                  {/* Flecha top-right: rota -45° en hover */}
-                  <ArrowRight
-                    size={22}
-                    weight="regular"
-                    className="ml-auto text-white/60 group-hover:text-white transition-all duration-500 group-hover:-rotate-45"
-                  />
-
-                  {/* Bottom: título animado + descripción */}
-                  <div>
-                    <AnimatedTitle text={title} />
-                    <p className="text-[12px] text-white/65 leading-[1.65] max-w-[200px] transition-colors duration-500 group-hover:text-white/85">
+                <div className="relative z-10 flex h-full flex-col justify-end p-5 md:p-6">
+                  <div className="max-w-[270px]">
+                    <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--coral)]/90">
+                      Historia {String(i + 1).padStart(2, '0')}
+                    </p>
+                    <h3 className="font-[family-name:var(--font-display)] text-[1.55rem] font-medium leading-none text-white">
+                      {title}
+                    </h3>
+                    <p className="mt-3 text-[12px] text-white/68 leading-[1.65] transition-colors duration-500 group-hover:text-white/86">
                       {description}
                     </p>
                   </div>
                 </div>
-
-              </div>
+              </article>
             </AnimateIn>
           ))}
         </div>
-
       </div>
     </section>
   )

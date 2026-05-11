@@ -15,6 +15,12 @@ type HeroProps = {
   ctaSecondaryHref?: string | null
   especialidades?: string[] | null
   credits?: string[] | null
+  mediaMode?: 'abstract' | 'video' | 'image' | null
+  videoSrc?: string | null
+  posterSrc?: string | null
+  backgroundImageSrc?: string | null
+  overlayOpacity?: number | null
+  showFinancialOverlay?: boolean | null
 }
 
 /**
@@ -177,6 +183,12 @@ export function Hero({
   ctaSecondaryHref,
   especialidades: especialidadesProp,
   credits: creditsProp,
+  mediaMode,
+  videoSrc,
+  posterSrc,
+  backgroundImageSrc,
+  overlayOpacity,
+  showFinancialOverlay,
 }: HeroProps = {}) {
   const badgeText = badge || 'Consultoría Contable & Financiera'
   const titleTemplate = title || 'Sabiduría frente a los {highlight} empresariales'
@@ -193,6 +205,15 @@ export function Hero({
   const especialidades =
     especialidadesProp && especialidadesProp.length > 0 ? especialidadesProp : defaultEspecialidades
   const credits = creditsProp && creditsProp.length > 0 ? creditsProp : defaultCredits
+  const activeMediaMode = mediaMode || 'video'
+  const heroVideoSrc = videoSrc || '/media/hero-atenea.mp4'
+  const heroPosterSrc = posterSrc || '/media/hero-atenea-poster.jpg'
+  const heroOverlayOpacity =
+    typeof overlayOpacity === 'number' && Number.isFinite(overlayOpacity)
+      ? Math.min(Math.max(overlayOpacity, 0), 0.92)
+      : 0.3
+  const shouldShowFinancialOverlay = (showFinancialOverlay ?? true) && activeMediaMode === 'abstract'
+  const showSpecialtiesPanel = activeMediaMode === 'abstract'
 
   // Split "... {highlight} ..." into [before, after]
   const [titleBefore, titleAfter] = titleTemplate.includes('{highlight}')
@@ -200,7 +221,57 @@ export function Hero({
     : [titleTemplate, '']
 
   return (
-    <section className="relative min-h-[calc(100vh-72px)] flex items-center overflow-hidden bg-[var(--navy)] py-24">
+    <section className="relative min-h-[calc(100vh-76px)] flex items-center overflow-hidden bg-[var(--navy)] py-24">
+
+      {activeMediaMode === 'video' && (
+        <>
+          <div
+            className="absolute inset-0 bg-cover bg-center motion-reduce:block"
+            style={{ backgroundImage: `url("${heroPosterSrc}")` }}
+            aria-hidden="true"
+          />
+          <video
+            className="absolute inset-0 h-full w-full object-cover opacity-100 motion-reduce:hidden [object-position:58%_62%] md:[object-position:54%_54%] xl:[object-position:52%_53%]"
+            style={{ filter: 'brightness(1.08) contrast(1.04) saturate(0.96)' }}
+            src={heroVideoSrc}
+            poster={heroPosterSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+          />
+        </>
+      )}
+
+      {activeMediaMode === 'image' && backgroundImageSrc && (
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-70"
+          style={{ backgroundImage: `url("${backgroundImageSrc}")` }}
+          aria-hidden="true"
+        />
+      )}
+
+      {(activeMediaMode === 'video' || activeMediaMode === 'image') && (
+        <>
+          <div
+            className="absolute inset-0 bg-[var(--navy)]"
+            style={{ opacity: heroOverlayOpacity }}
+            aria-hidden="true"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                activeMediaMode === 'video'
+                  ? 'linear-gradient(90deg, rgba(2,48,68,0.9) 0%, rgba(2,48,68,0.72) 32%, rgba(2,48,68,0.3) 56%, rgba(2,48,68,0.05) 100%)'
+                  : 'linear-gradient(90deg, var(--navy) 0%, rgba(2,48,68,0.6) 50%, rgba(2,48,68,0.22) 100%)',
+            }}
+            aria-hidden="true"
+          />
+        </>
+      )}
 
       {/* Gradiente coral — arriba derecha */}
       <div
@@ -210,15 +281,20 @@ export function Hero({
       />
 
       {/* Panel diagonal */}
-      <div
-        className="absolute top-0 right-0 w-[48%] h-full bg-white/[0.016] hidden lg:block pointer-events-none"
-        style={{ clipPath: 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)' }}
-        aria-hidden="true"
-      />
+      {activeMediaMode === 'abstract' && (
+        <div
+          className="absolute top-0 right-0 w-[48%] h-full bg-white/[0.016] hidden lg:block pointer-events-none"
+          style={{ clipPath: 'polygon(10% 0, 100% 0, 100% 100%, 0 100%)' }}
+          aria-hidden="true"
+        />
+      )}
 
       {/* Composición financiera — integrada con gradient mask */}
       <div
-        className="absolute inset-0 pointer-events-none select-none hidden lg:block"
+        className={[
+          'absolute inset-0 pointer-events-none select-none hidden lg:block',
+          shouldShowFinancialOverlay ? '' : 'opacity-0',
+        ].join(' ')}
         style={{
           maskImage:
             'linear-gradient(to right, transparent 0%, transparent 18%, rgba(0,0,0,0.3) 34%, rgba(0,0,0,0.75) 52%, black 70%)',
@@ -232,20 +308,25 @@ export function Hero({
 
       {/* Layout */}
       <div className="relative z-10 w-full max-w-[1280px] mx-auto px-6 md:px-[60px]">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] xl:grid-cols-[1fr_420px] gap-12 xl:gap-20 items-center">
+        <div
+          className={[
+            'grid grid-cols-1 gap-12 xl:gap-20 items-center',
+            showSpecialtiesPanel ? 'lg:grid-cols-[1fr_380px] xl:grid-cols-[1fr_420px]' : 'lg:grid-cols-[minmax(0,720px)]',
+          ].join(' ')}
+        >
 
           {/* Columna izquierda */}
           <div>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-10 border border-[var(--coral-border)] bg-[var(--coral-muted)] rounded-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--coral)]" />
-              <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-[var(--coral)] font-[family-name:var(--font-body)]">
+              <span className="text-[10px] sm:text-[11px] font-medium tracking-[0.16em] sm:tracking-[0.2em] uppercase text-[var(--coral)] font-[family-name:var(--font-body)]">
                 {badgeText}
               </span>
             </div>
 
             <h1
-              className="font-[family-name:var(--font-display)] font-medium leading-[1.07] text-[var(--cream)] mb-7 tracking-[-0.02em]"
-              style={{ fontSize: 'clamp(40px,5.5vw,80px)' }}
+              className="font-[family-name:var(--font-display)] font-medium leading-[1.04] sm:leading-[1.07] text-[var(--cream)] mb-7 tracking-[-0.02em]"
+              style={{ fontSize: 'clamp(42px,12vw,80px)' }}
             >
               {titleBefore}
               {titleAfter !== '' && (
@@ -256,16 +337,16 @@ export function Hero({
               {titleAfter}
             </h1>
 
-            <p className="text-[17px] font-light text-[var(--cream-dark)] leading-[1.8] mb-12 max-w-[460px]">
+            <p className="text-[16px] sm:text-[17px] font-light text-[var(--cream-dark)] leading-[1.75] sm:leading-[1.8] mb-10 sm:mb-12 max-w-[460px]">
               {subtitleText}
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
               <Button
                 href={primary.href}
                 variant="primary"
                 size="lg"
-                className="!bg-transparent !border-[var(--coral)]/50 !text-[var(--coral)] hover:!border-[var(--coral)] hover:!bg-[var(--coral)]/8"
+                className="w-full sm:w-auto !bg-transparent !border-[var(--coral)]/50 !text-[var(--coral)] hover:!border-[var(--coral)] hover:!bg-[var(--coral)]/8"
               >
                 {primary.label}
               </Button>
@@ -273,7 +354,7 @@ export function Hero({
                 href={secondary.href}
                 variant="ghost"
                 size="lg"
-                className="!bg-white/10 !border-white/25 !text-white backdrop-blur-md hover:!bg-white/20 hover:!border-white/45"
+                className="w-full sm:w-auto !bg-white/10 !border-white/25 !text-white backdrop-blur-md hover:!bg-white/20 hover:!border-white/45"
               >
                 {secondary.label}
                 <ArrowRight size={16} />
@@ -282,6 +363,7 @@ export function Hero({
           </div>
 
           {/* Columna derecha — panel especialidades */}
+          {showSpecialtiesPanel && (
           <div className="hidden lg:block">
             <div className="border border-white/[0.1] bg-white/[0.05] backdrop-blur-sm">
 
@@ -322,6 +404,7 @@ export function Hero({
 
             </div>
           </div>
+          )}
 
         </div>
       </div>

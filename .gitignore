@@ -33,6 +33,10 @@
 # payload uploads are stored on a persistent volume in production
 /public/media/*
 !/public/media/.gitkeep
+!/public/media/hero-atenea.mp4
+!/public/media/hero-atenea-poster.jpg
+!/public/media/images/
+!/public/media/images/*.png
 
 # debug
 npm-debug.log*

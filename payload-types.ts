@@ -762,6 +762,24 @@ export interface SiteSetting {
   heroTitle?: string | null;
   heroHighlight?: string | null;
   heroSubtitle?: string | null;
+  heroMediaMode?: ('video' | 'image' | 'abstract') | null;
+  /**
+   * Ej: /media/hero-atenea.mp4. El video se reproduce sin audio.
+   */
+  heroVideoSrc?: string | null;
+  /**
+   * Imagen de respaldo para carga lenta o mobile. Ej: /media/hero-atenea-poster.jpg
+   */
+  heroPosterSrc?: string | null;
+  /**
+   * Se usa cuando el modo del hero es Imagen humana.
+   */
+  heroBackgroundImageSrc?: string | null;
+  /**
+   * 0 = sin oscurecer, 0.92 = muy oscuro. Recomendado: 0.28 a 0.38 para video.
+   */
+  heroOverlayOpacity?: number | null;
+  heroShowFinancialOverlay?: boolean | null;
   heroCtaPrimaryLabel?: string | null;
   heroCtaPrimaryHref?: string | null;
   heroCtaSecondaryLabel?: string | null;
@@ -951,6 +969,12 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   heroTitle?: T;
   heroHighlight?: T;
   heroSubtitle?: T;
+  heroMediaMode?: T;
+  heroVideoSrc?: T;
+  heroPosterSrc?: T;
+  heroBackgroundImageSrc?: T;
+  heroOverlayOpacity?: T;
+  heroShowFinancialOverlay?: T;
   heroCtaPrimaryLabel?: T;
   heroCtaPrimaryHref?: T;
   heroCtaSecondaryLabel?: T;

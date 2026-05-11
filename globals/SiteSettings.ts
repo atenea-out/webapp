@@ -146,6 +146,61 @@ export const SiteSettings: GlobalConfig = {
                 'En Atenea, simplificamos lo complejo para que tú te enfoques en crecer.',
             },
             {
+              name: 'heroMediaMode',
+              type: 'select',
+              label: 'Fondo del hero',
+              defaultValue: 'video',
+              options: [
+                { label: 'Video humano + overlay financiero', value: 'video' },
+                { label: 'Imagen humana', value: 'image' },
+                { label: 'ComposiciÃ³n financiera abstracta', value: 'abstract' },
+              ],
+            },
+            {
+              name: 'heroVideoSrc',
+              type: 'text',
+              label: 'Hero video URL',
+              defaultValue: '/media/hero-atenea.mp4',
+              admin: {
+                description: 'Ej: /media/hero-atenea.mp4. El video se reproduce sin audio.',
+              },
+            },
+            {
+              name: 'heroPosterSrc',
+              type: 'text',
+              label: 'Hero poster/fallback URL',
+              defaultValue: '/media/hero-atenea-poster.jpg',
+              admin: {
+                description: 'Imagen de respaldo para carga lenta o mobile. Ej: /media/hero-atenea-poster.jpg',
+              },
+            },
+            {
+              name: 'heroBackgroundImageSrc',
+              type: 'text',
+              label: 'Hero imagen de fondo URL',
+              admin: {
+                description: 'Se usa cuando el modo del hero es Imagen humana.',
+              },
+            },
+            {
+              name: 'heroOverlayOpacity',
+              type: 'number',
+              label: 'Oscuridad del overlay del hero',
+              defaultValue: 0.3,
+              min: 0,
+              max: 0.92,
+              admin: {
+                step: 0.01,
+                description: '0 = sin oscurecer, 0.92 = muy oscuro. Recomendado: 0.28 a 0.38 para video.',
+              },
+            },
+            {
+              name: 'heroShowFinancialOverlay',
+              type: 'checkbox',
+              label: 'Mostrar grÃ¡fico financiero sutil sobre el video',
+              defaultValue: true,
+            },
+            {
               name: 'heroCtaPrimaryLabel',
               type: 'text',
               label: 'Botón primario — texto',

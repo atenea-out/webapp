@@ -33,6 +33,16 @@ export const metadata: Metadata = {
     locale: 'es_EC',
     siteName: 'Atenea Outsourcing',
   },
+  icons: {
+    icon: [
+      {
+        url: '/media/images/favicon.png',
+        type: 'image/png',
+      },
+    ],
+    shortcut: '/media/images/favicon.png',
+    apple: '/media/images/favicon.png',
+  },
   robots: { index: true, follow: true },
 }
 
@@ -48,7 +58,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
           portalLabel={nav.portalLabel}
           portalHref={nav.portalHref}
         />
-        <main className="pt-[72px]">{children}</main>
+        <main className="pt-[76px]">{children}</main>
         <Footer />
         <WhatsAppButton number={settings.whatsappNumber} />
       </body>

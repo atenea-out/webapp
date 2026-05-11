@@ -47,6 +47,9 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
+      - name: Seed CI database
+        run: node --import @swc-node/register/esm-register scripts/seed.ts
+
       - name: Build
         run: npm run build
 

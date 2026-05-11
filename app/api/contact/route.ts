@@ -10,7 +10,6 @@ import {
   validateContactPayload,
 } from '@/lib/contact'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
 const rateLimit = new Map<string, { count: number; resetAt: number }>()
 
 function getClientIp(req: NextRequest) {
@@ -55,10 +54,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: validation.error || 'Solicitud invalida.' }, { status: 400 })
     }
 
-    if (!process.env.RESEND_API_KEY) {
+    const resendApiKey = process.env.RESEND_API_KEY
+    if (!resendApiKey) {
       return NextResponse.json({ error: 'El servicio de contacto no esta configurado.' }, { status: 503 })
     }
 
+    const resend = new Resend(resendApiKey)
     const { name, email, phone, service, message } = validation.data
     const settings = await getSiteSettings()
     const recipient = settings.email || 'info@atenea-outsourcing.com'

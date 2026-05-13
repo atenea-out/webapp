@@ -2,7 +2,7 @@ import { readFile } from 'fs/promises'
 import path from 'path'
 import { NextRequest, NextResponse } from 'next/server'
 
-const fallbackRoot = path.join(process.cwd(), 'public', 'assets', 'media')
+const fallbackRoot = path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'assets', 'media')
 
 const contentTypes: Record<string, string> = {
   '.jpg': 'image/jpeg',

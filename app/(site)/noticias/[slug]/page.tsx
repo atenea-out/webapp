@@ -7,6 +7,7 @@ import { getPostBySlug, getPosts, getSiteSettings } from '@/lib/queries'
 import { RichText } from '@/lib/lexical-to-react'
 import type { Media } from '@/payload-types'
 import { settingText } from '@/lib/settings-text'
+import { resolveMediaUrl } from '@/lib/media-url'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -56,6 +57,8 @@ export default async function NoticiaPage({ params }: Props) {
     post.featuredImage && typeof post.featuredImage !== 'number'
       ? (post.featuredImage as Media)
       : null
+  const featuredImgUrl = resolveMediaUrl(featuredImg?.url)
+  const featuredImgAlt = featuredImg?.alt || post.title
 
   return (
     <>
@@ -86,11 +89,11 @@ export default async function NoticiaPage({ params }: Props) {
       <section className="py-16 px-6 md:px-[60px] bg-[var(--cream-light)]">
         <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16">
           <article className="lg:col-span-2">
-            {featuredImg?.url && (
+            {featuredImgUrl && (
               <div className="aspect-[16/9] relative mb-8 overflow-hidden">
                 <Image
-                  src={featuredImg.url}
-                  alt={featuredImg.alt || post.title}
+                  src={featuredImgUrl}
+                  alt={featuredImgAlt}
                   fill
                   priority
                   className="object-cover"

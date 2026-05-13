@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import { getPosts, getSiteSettings } from '@/lib/queries'
 import type { Post, Media } from '@/payload-types'
 import { settingText } from '@/lib/settings-text'
+import { resolveMediaUrl } from '@/lib/media-url'
 
 export const metadata: Metadata = {
   title: 'Noticias',
@@ -41,7 +42,7 @@ function formatDate(dateStr?: string | null) {
 function getImageUrl(img: Post['featuredImage']): string | null {
   if (!img) return null
   if (typeof img === 'number') return null
-  return (img as Media).url ?? null
+  return resolveMediaUrl((img as Media).url)
 }
 
 export default async function NoticiasPage() {

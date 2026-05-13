@@ -36,12 +36,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/media/images/favicon.png',
+        url: '/assets/media/images/favicon.png',
         type: 'image/png',
       },
     ],
-    shortcut: '/media/images/favicon.png',
-    apple: '/media/images/favicon.png',
+    shortcut: '/assets/media/images/favicon.png',
+    apple: '/assets/media/images/favicon.png',
   },
   robots: { index: true, follow: true },
 }

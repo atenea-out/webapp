@@ -57,6 +57,7 @@ const db = isPostgresUri
 export default buildConfig({
   admin: {
     user: 'users',
+    theme: 'dark',
     avatar: {
       Component: {
         path: '@/components/payload/AteneaUserAvatar#AteneaUserAvatar',
@@ -91,17 +92,17 @@ export default buildConfig({
         {
           rel: 'icon',
           type: 'image/png',
-          url: '/media/images/favicon.png',
+          url: '/assets/media/images/favicon.png',
         },
         {
           rel: 'shortcut icon',
           type: 'image/png',
-          url: '/media/images/favicon.png',
+          url: '/assets/media/images/favicon.png',
         },
         {
           rel: 'apple-touch-icon',
           type: 'image/png',
-          url: '/media/images/favicon.png',
+          url: '/assets/media/images/favicon.png',
         },
       ],
     },

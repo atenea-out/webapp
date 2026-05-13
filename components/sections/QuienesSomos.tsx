@@ -3,27 +3,38 @@ import { AnimateIn } from '@/components/ui/AnimateIn'
 
 type Valor = { title: string; description: string; imgSrc: string }
 
+const staticAboutImages: Record<string, string> = {
+  '/media/images/quienes-excelencia.png': '/assets/media/images/quienes-excelencia.png',
+  '/media/images/quienes-confidencialidad.png': '/assets/media/images/quienes-confidencialidad.png',
+  '/media/images/quienes-compromiso.png': '/assets/media/images/quienes-compromiso.png',
+  '/media/images/quienes-innovacion.png': '/assets/media/images/quienes-innovacion.png',
+}
+
+function resolveAboutImage(src: string) {
+  return staticAboutImages[src] || src
+}
+
 const defaultValores: Valor[] = [
   {
     title: 'Excelencia',
     description:
       'Estándares de calidad superiores en cada entregable, con procesos auditables y resultados verificables.',
-    imgSrc: '/media/images/quienes-excelencia.png',
+    imgSrc: '/assets/media/images/quienes-excelencia.png',
   },
   {
     title: 'Confidencialidad',
     description: 'Tratamiento seguro y estricto de la información financiera de cada cliente.',
-    imgSrc: '/media/images/quienes-confidencialidad.png',
+    imgSrc: '/assets/media/images/quienes-confidencialidad.png',
   },
   {
     title: 'Compromiso',
     description: 'Relaciones de largo plazo basadas en resultados reales y confianza mutua.',
-    imgSrc: '/media/images/quienes-compromiso.png',
+    imgSrc: '/assets/media/images/quienes-compromiso.png',
   },
   {
     title: 'Innovación',
     description: 'Actualización permanente ante cambios normativos y avances tecnológicos del sector.',
-    imgSrc: '/media/images/quienes-innovacion.png',
+    imgSrc: '/assets/media/images/quienes-innovacion.png',
   },
 ]
 
@@ -62,7 +73,7 @@ export function QuienesSomos({ text, valores: valoresProp }: QuienesSomosProps =
             >
               {imgSrc && (
                 <Image
-                  src={imgSrc}
+                  src={resolveAboutImage(imgSrc)}
                   alt={title}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

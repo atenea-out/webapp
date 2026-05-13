@@ -11,9 +11,9 @@ import './admin-theme.css'
 export const metadata: Metadata = {
   title: 'Administración — Atenea Outsourcing',
   icons: {
-    icon: [{ url: '/media/images/favicon.png', type: 'image/png' }],
-    shortcut: '/media/images/favicon.png',
-    apple: '/media/images/favicon.png',
+    icon: [{ url: '/assets/media/images/favicon.png', type: 'image/png' }],
+    shortcut: '/assets/media/images/favicon.png',
+    apple: '/assets/media/images/favicon.png',
   },
 }
 

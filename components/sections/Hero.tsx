@@ -3,6 +3,16 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr'
 
 const defaultEspecialidades = ['Contabilidad', 'Tributación', 'Nómina', 'Tesorería', 'Legal']
 const defaultCredits = ['NIIF', 'SRI', 'SAP', 'ERP']
+const staticHeroAssets: Record<string, string> = {
+  '/media/hero-atenea.mp4': '/assets/media/hero-atenea.mp4',
+  '/media/hero-atenea-poster.jpg': '/assets/media/hero-atenea-poster.jpg',
+}
+
+function resolveHeroAsset(src: string | null | undefined, fallback: string) {
+  const value = src || fallback
+
+  return staticHeroAssets[value] || value
+}
 
 type HeroProps = {
   badge?: string | null
@@ -206,8 +216,8 @@ export function Hero({
     especialidadesProp && especialidadesProp.length > 0 ? especialidadesProp : defaultEspecialidades
   const credits = creditsProp && creditsProp.length > 0 ? creditsProp : defaultCredits
   const activeMediaMode = mediaMode || 'video'
-  const heroVideoSrc = videoSrc || '/media/hero-atenea.mp4'
-  const heroPosterSrc = posterSrc || '/media/hero-atenea-poster.jpg'
+  const heroVideoSrc = resolveHeroAsset(videoSrc, '/assets/media/hero-atenea.mp4')
+  const heroPosterSrc = resolveHeroAsset(posterSrc, '/assets/media/hero-atenea-poster.jpg')
   const heroOverlayOpacity =
     typeof overlayOpacity === 'number' && Number.isFinite(overlayOpacity)
       ? Math.min(Math.max(overlayOpacity, 0), 0.92)

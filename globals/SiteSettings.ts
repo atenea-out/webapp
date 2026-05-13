@@ -200,18 +200,18 @@ export const SiteSettings: GlobalConfig = {
               name: 'heroVideoSrc',
               type: 'text',
               label: 'Hero video URL',
-              defaultValue: '/media/hero-atenea.mp4',
+              defaultValue: '/assets/media/hero-atenea.mp4',
               admin: {
-                description: 'Ej: /media/hero-atenea.mp4. El video se reproduce sin audio.',
+                description: 'Ej: /assets/media/hero-atenea.mp4. El video se reproduce sin audio.',
               },
             },
             {
               name: 'heroPosterSrc',
               type: 'text',
               label: 'Hero poster/fallback URL',
-              defaultValue: '/media/hero-atenea-poster.jpg',
+              defaultValue: '/assets/media/hero-atenea-poster.jpg',
               admin: {
-                description: 'Imagen de respaldo para carga lenta o mobile. Ej: /media/hero-atenea-poster.jpg',
+                description: 'Imagen de respaldo para carga lenta o mobile. Ej: /assets/media/hero-atenea-poster.jpg',
               },
             },
             {

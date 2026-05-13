@@ -458,8 +458,8 @@ async function main() {
       heroHighlight: 'desafíos',
       heroSubtitle: 'En Atenea, simplificamos lo complejo para que tú te enfoques en crecer.',
       heroMediaMode: 'video',
-      heroVideoSrc: '/media/hero-atenea.mp4',
-      heroPosterSrc: '/media/hero-atenea-poster.jpg',
+      heroVideoSrc: '/assets/media/hero-atenea.mp4',
+      heroPosterSrc: '/assets/media/hero-atenea-poster.jpg',
       heroOverlayOpacity: 0.3,
       heroShowFinancialOverlay: true,
       heroCtaPrimaryLabel: 'Nuestros Servicios',
@@ -491,27 +491,27 @@ async function main() {
           description:
             'Estándares de calidad superiores en cada entregable, con procesos auditables y resultados verificables.',
           imageUrl:
-            '/media/images/quienes-excelencia.png',
+            '/assets/media/images/quienes-excelencia.png',
         },
         {
           title: 'Confidencialidad',
           description:
             'Tratamiento seguro y estricto de la información financiera de cada cliente.',
           imageUrl:
-            '/media/images/quienes-confidencialidad.png',
+            '/assets/media/images/quienes-confidencialidad.png',
         },
         {
           title: 'Compromiso',
           description: 'Relaciones de largo plazo basadas en resultados reales y confianza mutua.',
           imageUrl:
-            '/media/images/quienes-compromiso.png',
+            '/assets/media/images/quienes-compromiso.png',
         },
         {
           title: 'Innovación',
           description:
             'Actualización permanente ante cambios normativos y avances tecnológicos del sector.',
           imageUrl:
-            '/media/images/quienes-innovacion.png',
+            '/assets/media/images/quienes-innovacion.png',
         },
       ],
 

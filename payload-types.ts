@@ -789,11 +789,11 @@ export interface SiteSetting {
   heroSubtitle?: string | null;
   heroMediaMode?: ('video' | 'image' | 'abstract') | null;
   /**
-   * Ej: /media/hero-atenea.mp4. El video se reproduce sin audio.
+   * Ej: /assets/media/hero-atenea.mp4. El video se reproduce sin audio.
    */
   heroVideoSrc?: string | null;
   /**
-   * Imagen de respaldo para carga lenta o mobile. Ej: /media/hero-atenea-poster.jpg
+   * Imagen de respaldo para carga lenta o mobile. Ej: /assets/media/hero-atenea-poster.jpg
    */
   heroPosterSrc?: string | null;
   /**

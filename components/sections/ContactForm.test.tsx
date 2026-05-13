@@ -37,7 +37,7 @@ describe('ContactForm', () => {
     await user.type(container.querySelector<HTMLInputElement>('input[name="name"]')!, 'Ana Rojas')
     await user.type(container.querySelector<HTMLInputElement>('input[name="email"]')!, 'ana@example.com')
     await user.selectOptions(container.querySelector<HTMLSelectElement>('select[name="service"]')!, 'Legal')
-    await user.type(container.querySelector<HTMLTextAreaElement>('textarea[name="message"]')!, 'Necesito asesoria.')
+    await user.type(container.querySelector<HTMLTextAreaElement>('textarea[name="message"]')!, 'Necesito asesoría.')
     await user.click(screen.getByRole('button', { name: /enviar/i }))
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1))
@@ -48,7 +48,7 @@ describe('ContactForm', () => {
       name: 'Ana Rojas',
       email: 'ana@example.com',
       service: 'Legal',
-      message: 'Necesito asesoria.',
+      message: 'Necesito asesoría.',
       website: '',
     })
   })
@@ -58,7 +58,7 @@ describe('ContactForm', () => {
       'fetch',
       vi.fn().mockResolvedValue({
         ok: false,
-        json: async () => ({ error: 'Email invalido.' }),
+        json: async () => ({ error: 'Email inválido.' }),
       }),
     )
 
@@ -70,6 +70,6 @@ describe('ContactForm', () => {
     await user.type(container.querySelector<HTMLTextAreaElement>('textarea[name="message"]')!, 'Mensaje valido.')
     await user.click(screen.getByRole('button', { name: /enviar/i }))
 
-    expect(await screen.findByText('Email invalido.')).toBeInTheDocument()
+    expect(await screen.findByText('Email inválido.')).toBeInTheDocument()
   })
 })

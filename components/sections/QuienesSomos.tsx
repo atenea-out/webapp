@@ -6,12 +6,13 @@ type Valor = { title: string; description: string; imgSrc: string }
 const defaultValores: Valor[] = [
   {
     title: 'Excelencia',
-    description: 'Estandares de calidad superiores en cada entregable, con procesos auditables y resultados verificables.',
+    description:
+      'Estándares de calidad superiores en cada entregable, con procesos auditables y resultados verificables.',
     imgSrc: '/media/images/quienes-excelencia.png',
   },
   {
     title: 'Confidencialidad',
-    description: 'Tratamiento seguro y estricto de la informacion financiera de cada cliente.',
+    description: 'Tratamiento seguro y estricto de la información financiera de cada cliente.',
     imgSrc: '/media/images/quienes-confidencialidad.png',
   },
   {
@@ -20,8 +21,8 @@ const defaultValores: Valor[] = [
     imgSrc: '/media/images/quienes-compromiso.png',
   },
   {
-    title: 'Innovacion',
-    description: 'Actualizacion permanente ante cambios normativos y avances tecnologicos del sector.',
+    title: 'Innovación',
+    description: 'Actualización permanente ante cambios normativos y avances tecnológicos del sector.',
     imgSrc: '/media/images/quienes-innovacion.png',
   },
 ]
@@ -35,12 +36,12 @@ export function QuienesSomos({ text, valores: valoresProp }: QuienesSomosProps =
   const valores = valoresProp && valoresProp.length > 0 ? valoresProp : defaultValores
   const intro =
     text ||
-    'Firma especializada en soluciones integrales de contabilidad, finanzas y tributacion con mas de dos decadas de trayectoria.'
+    'Firma especializada en soluciones integrales de contabilidad, finanzas y tributación con más de dos décadas de trayectoria.'
 
   return (
     <section className="bg-white py-[var(--section-pad)] px-6 md:px-[60px]">
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 items-start">
-        <AnimateIn className="lg:sticky lg:top-28">
+        <AnimateIn>
           <span className="section-tag">Sobre Nosotros</span>
           <h2
             className="font-[family-name:var(--font-display)] font-medium text-[var(--navy)] leading-[1.15] tracking-[-0.02em] mt-1 mb-4"
@@ -54,50 +55,51 @@ export function QuienesSomos({ text, valores: valoresProp }: QuienesSomosProps =
         </AnimateIn>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {valores.map(({ title, description, imgSrc }, i) => (
-            <AnimateIn key={title} delay={i * 70}>
-              <article className="group relative h-56 md:h-64 w-full overflow-hidden bg-[var(--navy)] border border-[var(--navy)]/10">
-                {imgSrc && (
-                  <Image
-                    src={imgSrc}
-                    alt={title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    quality={90}
-                    className="object-cover transition-[filter,transform] duration-700 ease-out group-hover:scale-[1.025] md:grayscale md:saturate-[0.7] group-hover:grayscale-0 group-hover:saturate-100"
-                  />
-                )}
-
-                <div
-                  className="absolute inset-0 transition-opacity duration-700"
-                  style={{
-                    background:
-                      'linear-gradient(180deg, rgba(2,48,68,0.08) 0%, rgba(2,48,68,0.28) 42%, rgba(2,48,68,0.88) 100%)',
-                  }}
-                  aria-hidden="true"
+          {valores.map(({ title, description, imgSrc }) => (
+            <article
+              key={title}
+              className="group relative h-56 md:h-64 w-full overflow-hidden bg-[var(--navy)] border border-[var(--navy)]/10"
+            >
+              {imgSrc && (
+                <Image
+                  src={imgSrc}
+                  alt={title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  quality={90}
+                  className="object-cover transition-[filter] duration-700 ease-out md:grayscale md:saturate-[0.7] group-hover:grayscale-0 group-hover:saturate-100"
                 />
-                <div
-                  className="absolute inset-0 opacity-70 mix-blend-color"
-                  style={{ background: 'rgba(2,48,68,0.18)' }}
-                  aria-hidden="true"
-                />
-                <div className="absolute inset-x-0 bottom-0 h-px bg-[var(--coral)]/45 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              )}
 
-                <div className="relative z-10 flex h-full flex-col justify-end p-5 md:p-6">
-                  <div className="max-w-[270px]">
-                    <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--coral)]/90">
-                      Historia {String(i + 1).padStart(2, '0')}
-                    </p>
-                    <h3 className="font-[family-name:var(--font-display)] text-[1.55rem] font-medium leading-none text-white">
-                      {title}
-                    </h3>
-                    <p className="mt-3 text-[12px] text-white/68 leading-[1.65] transition-colors duration-500 group-hover:text-white/86">
-                      {description}
-                    </p>
-                  </div>
+              <div
+                className="absolute inset-0 transition-opacity duration-700"
+                style={{
+                  background:
+                    'linear-gradient(180deg, rgba(2,48,68,0.08) 0%, rgba(2,48,68,0.28) 42%, rgba(2,48,68,0.88) 100%)',
+                }}
+                aria-hidden="true"
+              />
+              <div
+                className="absolute inset-0 opacity-70 mix-blend-color"
+                style={{ background: 'rgba(2,48,68,0.18)' }}
+                aria-hidden="true"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-px bg-[var(--coral)]/45 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+              <div className="relative z-10 flex h-full flex-col justify-end p-5 md:p-6">
+                <div className="max-w-[270px]">
+                  <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--coral)]/90">
+                    Historia Atenea
+                  </p>
+                  <h3 className="font-[family-name:var(--font-display)] text-[1.55rem] font-medium leading-none text-white">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-[12px] text-white/68 leading-[1.65] transition-colors duration-500 group-hover:text-white/86">
+                    {description}
+                  </p>
                 </div>
-              </article>
-            </AnimateIn>
+              </div>
+            </article>
           ))}
         </div>
       </div>

@@ -69,7 +69,7 @@ export default async function ServicioPage({ params }: Props) {
         <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16">
           <div className="lg:col-span-2">
             <h2 className="font-[family-name:var(--font-display)] text-[22px] font-medium text-[var(--navy)] mb-8">
-              {settingText(settings, 'serviceDetailIncludesTitle', 'Que incluye este servicio?')}
+              {settingText(settings, 'serviceDetailIncludesTitle', '¿Qué incluye este servicio?')}
             </h2>
             {bullets.length > 0 ? (
               <ul className="space-y-5">
@@ -94,20 +94,20 @@ export default async function ServicioPage({ params }: Props) {
             <div className="bg-white border border-[#e2e8f0] p-8 sticky top-24">
               <div className="w-8 h-0.5 bg-[var(--coral)] mb-5" />
               <h3 className="font-[family-name:var(--font-display)] text-[20px] font-medium text-[var(--navy)] mb-3 leading-[1.3]">
-                {settingText(settings, 'serviceDetailCtaTitle', 'Te interesa este servicio?')}
+                {settingText(settings, 'serviceDetailCtaTitle', '¿Te interesa este servicio?')}
               </h3>
               <p className="text-[13px] text-[var(--gray-mid)] leading-[1.7] mb-7">
                 {settingText(
                   settings,
                   'serviceDetailCtaDescription',
-                  'Contactanos y un experto te orientara sobre la mejor solucion para tu empresa.',
+                  'Contáctanos y un experto te orientará sobre la mejor solución para tu empresa.',
                 )}
               </p>
               <Link
                 href="/contacto"
                 className="flex items-center justify-center gap-2 w-full px-6 py-3.5 bg-[var(--navy)] text-white text-[12px] font-medium tracking-[0.08em] uppercase hover:bg-[var(--coral)] transition-all duration-200 font-[family-name:var(--font-body)]"
               >
-                {settingText(settings, 'serviceDetailCtaLabel', 'Solicitar informacion')} <ArrowUpRight size={14} />
+                {settingText(settings, 'serviceDetailCtaLabel', 'Solicitar información')} <ArrowUpRight size={14} />
               </Link>
 
               <div className="mt-6 pt-6 border-t border-[#e2e8f0] flex items-center gap-3">
@@ -116,7 +116,7 @@ export default async function ServicioPage({ params }: Props) {
                 </div>
                 <div>
                   <p className="text-[10px] tracking-[0.1em] uppercase text-[var(--gray-light)] mb-0.5 font-[family-name:var(--font-body)]">
-                    {settingText(settings, 'serviceDetailPhoneLabel', 'Llamanos')}
+                    {settingText(settings, 'serviceDetailPhoneLabel', 'Llámanos')}
                   </p>
                   <a
                     href={phoneHref}
@@ -129,7 +129,7 @@ export default async function ServicioPage({ params }: Props) {
 
               <div className="mt-6 pt-6 border-t border-[#e2e8f0]">
                 <p className="text-[11px] text-[var(--gray-light)] mb-3 font-[family-name:var(--font-body)]">
-                  {settingText(settings, 'serviceDetailMoreLabel', 'Tambien ofrecemos')}
+                  {settingText(settings, 'serviceDetailMoreLabel', 'También ofrecemos')}
                 </p>
                 <Link
                   href="/servicios"

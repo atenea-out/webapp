@@ -3,45 +3,34 @@
 import Link from 'next/link'
 import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-import { AnimateIn }    from '@/components/ui/AnimateIn'
+import { AnimateIn } from '@/components/ui/AnimateIn'
 import { Button } from '@/components/ui/Button'
 import { getIcon } from '@/lib/icons'
 
 export type ServicePreviewItem = {
   num: string
-  /** Nombre del icono (enum del CMS) — ej. 'BookOpen' */
   iconName?: string | null
   slug: string
   title: string
   description: string
 }
 
-/** SVG + idéntico al patrón Ruixen — 24×24, centrado sobre la esquina con -12px offset */
-function PlusIcon({ className = '' }: { className?: string }) {
+function CornerMark({ className = '' }: { className?: string }) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      width={20}
-      height={20}
-      strokeWidth="1"
-      stroke="currentColor"
-      className={`text-[var(--navy)]/30 ${className}`}
+    <span
+      className={`pointer-events-none absolute h-3 w-3 border-[var(--navy)]/12 ${className}`}
       aria-hidden="true"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
-    </svg>
+    />
   )
 }
 
-function CornerPlusIcons() {
+function CornerMarks() {
   return (
     <>
-      <PlusIcon className="absolute -top-[10px] -left-[10px]" />
-      <PlusIcon className="absolute -top-[10px] -right-[10px]" />
-      <PlusIcon className="absolute -bottom-[10px] -left-[10px]" />
-      <PlusIcon className="absolute -bottom-[10px] -right-[10px]" />
+      <CornerMark className="left-0 top-0 border-l border-t" />
+      <CornerMark className="right-0 top-0 border-r border-t" />
+      <CornerMark className="bottom-0 left-0 border-b border-l" />
+      <CornerMark className="bottom-0 right-0 border-b border-r" />
     </>
   )
 }
@@ -50,9 +39,7 @@ export function ServiciosPreview({ services }: { services: ServicePreviewItem[] 
   return (
     <section className="py-[var(--section-pad)] px-6 md:px-[60px] bg-white">
       <div className="max-w-[1280px] mx-auto">
-
-        {/* Header */}
-        <AnimateIn className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16">
+        <AnimateIn className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-10 md:mb-14">
           <SectionHeader
             tag="Lo que ofrecemos"
             title="Nuestros Servicios"
@@ -63,55 +50,58 @@ export function ServiciosPreview({ services }: { services: ServicePreviewItem[] 
           </Button>
         </AnimateIn>
 
-        {/* Grid con gap — cada card es independiente, los + flotan sobre las esquinas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {services.map(({ num, title, description, iconName, slug }, i) => {
-            const Icon = getIcon(iconName)
-            return (
-            <AnimateIn key={slug} delay={i * 60}>
-              <Link
-                href={`/servicios/${slug}`}
-                className="group relative flex flex-col gap-5 p-8 min-h-[220px]
-                           border border-[var(--navy)]/10
-                           bg-white hover:bg-[var(--bg)]
-                           transition-colors duration-300 h-full"
-              >
-                <CornerPlusIcons />
+        <div className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px border border-[var(--navy)]/10 bg-[var(--navy)]/10">
+            {services.map(({ num, title, description, iconName, slug }, i) => {
+              const Icon = getIcon(iconName)
 
-                {/* Top: número + icono */}
-                <div className="flex items-center justify-between">
-                  <span className="font-[family-name:var(--font-body)] text-[11px] tracking-[0.15em] text-[var(--navy)]/30 font-medium select-none">
-                    {num}
-                  </span>
-                  <Icon
-                    size={20}
-                    color="var(--coral)"
-                    weight="duotone"
-                    className="opacity-45 group-hover:opacity-100 transition-opacity duration-300"
-                  />
-                </div>
+              return (
+                <AnimateIn key={slug} delay={i * 60}>
+                  <Link
+                    href={`/servicios/${slug}`}
+                    className="group relative flex min-h-[220px] md:min-h-[250px] h-full flex-col overflow-hidden bg-white p-6 md:p-8 transition-colors duration-300 hover:bg-[#f8fafc]"
+                  >
+                    <CornerMarks />
 
-                {/* Línea coral */}
-                <div className="w-7 h-px bg-[var(--coral)] opacity-50 group-hover:w-12 group-hover:opacity-90 transition-all duration-300" />
+                    <div
+                      className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-[var(--coral)] transition-transform duration-300 group-hover:scale-x-100"
+                      aria-hidden="true"
+                    />
 
-                {/* Body */}
-                <div className="flex-1">
-                  <h3 className="font-[family-name:var(--font-display)] text-[17px] font-medium text-[var(--navy)] mb-3 leading-[1.3]">
-                    {title}
-                  </h3>
-                  <p className="text-[13px] text-[var(--gray-mid)] leading-[1.8]">{description}</p>
-                </div>
+                    <div className="flex items-start justify-between gap-6">
+                      <span className="font-[family-name:var(--font-body)] text-[11px] tracking-[0.18em] text-[var(--navy)]/34 font-medium select-none">
+                        {num}
+                      </span>
+                      <span className="flex h-10 w-10 items-center justify-center border border-[var(--navy)]/10 bg-[var(--bg)]/60 text-[var(--coral)] transition-colors duration-300 group-hover:border-[var(--coral)]/35 group-hover:bg-[var(--coral)]/8">
+                        <Icon
+                          size={20}
+                          color="currentColor"
+                          weight="duotone"
+                          className="opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+                        />
+                      </span>
+                    </div>
 
-                {/* CTA */}
-                <div className="flex items-center gap-1.5 text-[10px] tracking-[0.12em] uppercase font-medium font-[family-name:var(--font-body)] text-[var(--coral)] opacity-55 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-                  Ver servicio <ArrowUpRight size={12} />
-                </div>
-              </Link>
-            </AnimateIn>
-            )
-          })}
+                    <div className="mt-7 md:mt-8 h-px w-full bg-[var(--navy)]/8" aria-hidden="true" />
+
+                    <div className="flex-1 pt-5 md:pt-6">
+                      <h3 className="font-[family-name:var(--font-display)] text-[20px] font-medium text-[var(--navy)] mb-4 leading-[1.18] tracking-[-0.01em]">
+                        {title}
+                      </h3>
+                      <p className="text-[13px] text-[var(--gray-mid)] leading-[1.75] max-w-[32rem]">
+                        {description}
+                      </p>
+                    </div>
+
+                    <div className="mt-6 md:mt-7 flex items-center gap-1.5 text-[10px] tracking-[0.14em] uppercase font-medium font-[family-name:var(--font-body)] text-[var(--coral)] opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+                      Ver servicio <ArrowUpRight size={12} />
+                    </div>
+                  </Link>
+                </AnimateIn>
+              )
+            })}
+          </div>
         </div>
-
       </div>
     </section>
   )

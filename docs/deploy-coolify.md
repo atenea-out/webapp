@@ -3,7 +3,7 @@
 ## Arquitectura
 
 - Runtime: Coolify en el VPS de Hostinger.
-- Aplicacion: Next.js + Payload CMS.
+- Aplicación: Next.js + Payload CMS.
 - Base de datos: Neon Postgres mediante `DATABASE_URI`.
 - Uploads de Payload: volumen persistente montado en `/app/public/media`.
 - Email transaccional: Resend mediante `RESEND_API_KEY`.
@@ -19,9 +19,9 @@ NEXT_PUBLIC_SITE_URL=https://tu-dominio.com
 RESEND_API_KEY=<resend-api-key>
 ```
 
-`PAYLOAD_SECRET` debe ser largo, aleatorio y estable. Si cambia despues de tener usuarios/sesiones, puede invalidar comportamiento relacionado con autenticacion.
+`PAYLOAD_SECRET` debe ser largo, aleatorio y estable. Si cambia después de tener usuarios/sesiones, puede invalidar comportamiento relacionado con autenticación.
 
-## Configuracion recomendada en Coolify
+## Configuración recomendada en Coolify
 
 - Build command: `npm ci && npm run build`
 - Start command: `npm run start`
@@ -31,13 +31,13 @@ RESEND_API_KEY=<resend-api-key>
 ## Neon
 
 1. Crear un proyecto Postgres en Neon.
-2. Copiar la connection string de produccion.
+2. Copiar la connection string de producción.
 3. Usar `sslmode=require` en la URI.
 4. Pegarla en Coolify como `DATABASE_URI`.
 
-Para desarrollo local se puede seguir usando SQLite con `DATABASE_URI=file:./atenea.db`. En produccion el proyecto exige una URI Postgres.
+Para desarrollo local se puede seguir usando SQLite con `DATABASE_URI=file:./atenea.db`. En producción el proyecto exige una URI Postgres.
 
-Nota: `next build` puede ejecutarse localmente con SQLite para validar el sitio antes de tener Neon. El servidor de produccion si exige Postgres al arrancar.
+Nota: `next build` puede ejecutarse localmente con SQLite para validar el sitio antes de tener Neon. El servidor de producción sí exige Postgres al arrancar.
 
 ## Primer despliegue
 
@@ -45,7 +45,7 @@ Nota: `next build` puede ejecutarse localmente con SQLite para validar el sitio 
 2. Abrir `/admin`.
 3. Crear el primer usuario administrador.
 4. Ejecutar `npm run seed` desde la terminal de Coolify solo si se quiere poblar contenido inicial.
-5. Probar landing, paginas internas, formulario de contacto y uploads desde Payload.
+5. Probar landing, páginas internas, formulario de contacto y uploads desde Payload.
 
 ## Backups
 

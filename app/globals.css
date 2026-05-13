@@ -28,8 +28,14 @@
   --font-body:    'DM Sans', system-ui, sans-serif;
 
   /* Spacing */
-  --section-pad:  90px;
+  --section-pad:  72px;
   --nav-height:   76px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --section-pad: 90px;
+  }
 }
 
 /* ─── BASE ─── */

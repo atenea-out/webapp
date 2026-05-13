@@ -26,6 +26,11 @@ import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c08
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
+import { AteneaUserAvatar as AteneaUserAvatar_fbf609a628c0c876ae761a027024b460 } from '@/components/payload/AteneaUserAvatar'
+import { AteneaLogoutButton as AteneaLogoutButton_080d04ca7335ab9d3b86b75e4f330f0a } from '@/components/payload/AteneaLogoutButton'
+import { AteneaAdminLogo as AteneaAdminLogo_4f6e773a69c1666fe4985302b6935866 } from '@/components/payload/AteneaAdminLogo'
+import { AteneaDashboardIntro as AteneaDashboardIntro_c004b8927c6001604db1c2740f8e4d18 } from '@/components/payload/AteneaDashboardIntro'
+import { AteneaLoginIntro as AteneaLoginIntro_472e8d694522af4271b7498a69339d71 } from '@/components/payload/AteneaLoginIntro'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 export const importMap = {
@@ -57,5 +62,10 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
+  "@/components/payload/AteneaUserAvatar#AteneaUserAvatar": AteneaUserAvatar_fbf609a628c0c876ae761a027024b460,
+  "@/components/payload/AteneaLogoutButton#AteneaLogoutButton": AteneaLogoutButton_080d04ca7335ab9d3b86b75e4f330f0a,
+  "@/components/payload/AteneaAdminLogo#AteneaAdminLogo": AteneaAdminLogo_4f6e773a69c1666fe4985302b6935866,
+  "@/components/payload/AteneaDashboardIntro#AteneaDashboardIntro": AteneaDashboardIntro_c004b8927c6001604db1c2740f8e4d18,
+  "@/components/payload/AteneaLoginIntro#AteneaLoginIntro": AteneaLoginIntro_472e8d694522af4271b7498a69339d71,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

@@ -59,17 +59,17 @@ export default async function NoticiaPage({ params }: Props) {
 
   return (
     <>
-      <section className="bg-[var(--dark)] pt-20 pb-16 px-6 md:px-[60px] border-b-[3px] border-[var(--gold)]">
+      <section className="bg-[var(--navy)] pt-20 pb-16 px-6 md:px-[60px] border-b border-white/[0.08]">
         <div className="max-w-[860px] mx-auto">
           <Link
             href="/noticias"
-            className="inline-flex items-center gap-2 text-[12px] tracking-[0.08em] uppercase text-[var(--gold-light)] mb-8 hover:text-[var(--gold)] transition-colors font-[family-name:var(--font-dm-sans)]"
+            className="inline-flex items-center gap-2 text-[12px] tracking-[0.08em] uppercase text-[var(--coral)] mb-8 hover:text-[var(--coral-light)] transition-colors font-[family-name:var(--font-body)]"
           >
             <ArrowLeft size={14} /> {settingText(settings, 'newsDetailBackLabel', 'Todas las noticias')}
           </Link>
           <div className="flex items-center gap-3 mb-5">
             {post.category && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-medium tracking-[0.08em] uppercase rounded-sm border border-[var(--gold-border)] bg-[var(--gold-muted)] text-[var(--gold-light)]">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-medium tracking-[0.08em] uppercase rounded-sm border border-[var(--coral-border)] bg-[var(--coral-muted)] text-[var(--coral)]">
                 <Tag size={11} /> {categoryLabels[post.category] || post.category}
               </span>
             )}
@@ -77,7 +77,7 @@ export default async function NoticiaPage({ params }: Props) {
               <CalendarBlank size={13} /> {formatDate(post.publishedAt)}
             </span>
           </div>
-          <h1 className="font-[family-name:var(--font-playfair)] text-[clamp(26px,3.5vw,44px)] font-medium text-[var(--cream)] leading-[1.15]">
+          <h1 className="font-[family-name:var(--font-display)] text-[clamp(26px,3.5vw,44px)] font-medium text-[var(--cream)] leading-[1.15]">
             {post.title}
           </h1>
         </div>
@@ -99,7 +99,7 @@ export default async function NoticiaPage({ params }: Props) {
               </div>
             )}
             {post.excerpt && (
-              <p className="text-[17px] font-light text-[var(--dark)] leading-[1.85] mb-8 pb-8 border-b border-[var(--cream-dark)]">
+              <p className="text-[17px] font-light text-[var(--navy)] leading-[1.85] mb-8 pb-8 border-b border-[#d8e2eb]">
                 {post.excerpt}
               </p>
             )}
@@ -107,44 +107,44 @@ export default async function NoticiaPage({ params }: Props) {
           </article>
 
           <aside className="lg:col-span-1 space-y-6">
-            <div className="bg-[var(--dark)] rounded-sm p-7 border-t-2 border-[var(--gold)]">
-              <p className="font-[family-name:var(--font-playfair)] text-[18px] font-medium text-[var(--cream)] mb-3">
-                {settingText(settings, 'newsDetailCtaTitle', 'Necesitas asesoria?')}
+            <div className="bg-[var(--navy)] rounded-sm p-7 border-t-2 border-[var(--coral)]">
+              <p className="font-[family-name:var(--font-display)] text-[18px] font-medium text-[var(--cream)] mb-3">
+                {settingText(settings, 'newsDetailCtaTitle', '¿Necesitas asesoría?')}
               </p>
               <p className="text-[13px] text-[var(--gray-light)] leading-[1.7] mb-5">
                 {settingText(
                   settings,
                   'newsDetailCtaDescription',
-                  'Nuestro equipo puede orientarte sobre como estos cambios afectan a tu empresa especificamente.',
+                  'Nuestro equipo puede orientarte sobre cómo estos cambios afectan a tu empresa específicamente.',
                 )}
               </p>
               <Link
                 href="/contacto"
-                className="flex items-center justify-center w-full px-5 py-3 bg-[var(--gold)] text-[var(--dark)] text-[12px] font-medium tracking-[0.08em] uppercase rounded-sm hover:bg-[var(--gold-light)] transition-all duration-200 font-[family-name:var(--font-dm-sans)]"
+                className="flex items-center justify-center w-full px-5 py-3 bg-[var(--coral)] text-white text-[12px] font-medium tracking-[0.08em] uppercase rounded-sm hover:bg-[var(--coral-light)] transition-all duration-200 font-[family-name:var(--font-body)]"
               >
                 {settingText(settings, 'newsDetailCtaLabel', 'Consultar ahora')}
               </Link>
             </div>
 
             <div className="bg-[var(--white)] border border-[var(--cream-dark)] rounded-sm p-6">
-              <p className="text-[11px] tracking-[0.12em] uppercase text-[var(--gray-light)] mb-4 font-[family-name:var(--font-dm-sans)]">
+              <p className="text-[11px] tracking-[0.12em] uppercase text-[var(--gray-light)] mb-4 font-[family-name:var(--font-body)]">
                 {settingText(settings, 'newsDetailContactLabel', 'Contacto directo')}
               </p>
-              <a href={phoneHref} className="flex items-center gap-2.5 text-[14px] text-[var(--dark)] hover:text-[var(--gold)] transition-colors mb-2">
-                <Phone size={15} color="var(--gold)" /> {phone}
+              <a href={phoneHref} className="flex items-center gap-2.5 text-[14px] text-[var(--navy)] hover:text-[var(--coral)] transition-colors mb-2">
+                <Phone size={15} color="var(--coral)" /> {phone}
               </a>
-              <a href={`mailto:${email}`} className="flex items-center gap-2.5 text-[13px] text-[var(--dark)] hover:text-[var(--gold)] transition-colors">
-                <EnvelopeSimple size={15} color="var(--gold)" /> {email}
+              <a href={`mailto:${email}`} className="flex items-center gap-2.5 text-[13px] text-[var(--navy)] hover:text-[var(--coral)] transition-colors">
+                <EnvelopeSimple size={15} color="var(--coral)" /> {email}
               </a>
             </div>
 
             <div>
-              <p className="text-[11px] tracking-[0.12em] uppercase text-[var(--gray-light)] mb-4 font-[family-name:var(--font-dm-sans)]">
-                {settingText(settings, 'newsDetailMoreLabel', 'Ver mas articulos')}
+              <p className="text-[11px] tracking-[0.12em] uppercase text-[var(--gray-light)] mb-4 font-[family-name:var(--font-body)]">
+                {settingText(settings, 'newsDetailMoreLabel', 'Ver más artículos')}
               </p>
               <Link
                 href="/noticias"
-                className="text-[13px] text-[var(--gold)] underline underline-offset-3 hover:text-[var(--gold-light)] transition-colors"
+                className="text-[13px] text-[var(--coral)] underline underline-offset-3 hover:text-[var(--coral-light)] transition-colors"
               >
                 {settingText(settings, 'newsDetailBackToListLabel', 'Volver al listado de noticias')}
               </Link>

@@ -2,8 +2,8 @@
 
 ## Ramas
 
-- `main`: produccion. Coolify debe desplegar desde esta rama.
-- `develop`: integracion y pruebas antes de produccion.
+- `main`: producción. Coolify debe desplegar desde esta rama.
+- `develop`: integración y pruebas antes de producción.
 - `feature/<nombre>`: cambios puntuales.
 - `fix/<nombre>`: correcciones puntuales.
 
@@ -26,7 +26,7 @@ En GitHub, proteger `main` con:
 - Bloquear push directo a `main`.
 - Require conversation resolution.
 
-Para `develop`, conviene exigir CI verde pero permitir merges mas agiles.
+Para `develop`, conviene exigir CI verde pero permitir merges más ágiles.
 
 ## Coolify
 

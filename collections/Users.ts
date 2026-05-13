@@ -3,6 +3,10 @@ import { adminFieldOnly, adminOnly, adminOrSelf } from '@/lib/access'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+  labels: {
+    singular: 'Usuario',
+    plural: 'Usuarios',
+  },
   auth: true,
   access: {
     create: adminOnly,
@@ -20,6 +24,15 @@ export const Users: CollectionConfig = {
       type: 'text',
       label: 'Nombre',
       required: true,
+    },
+    {
+      name: 'avatar',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Foto de perfil',
+      admin: {
+        description: 'Imagen visible en el perfil y la esquina superior del panel.',
+      },
     },
     {
       name: 'role',

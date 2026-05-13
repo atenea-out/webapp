@@ -7,6 +7,7 @@ import {
   ContactPayload,
   MAX_CONTACT_BODY_BYTES,
   createContactEmail,
+  getContactRecipients,
   validateContactPayload,
 } from '@/lib/contact'
 
@@ -34,7 +35,7 @@ function checkRateLimit(key: string) {
 export async function POST(req: NextRequest) {
   try {
     if (req.headers.get('content-type')?.includes('application/json') !== true) {
-      return NextResponse.json({ error: 'Formato de solicitud invalido.' }, { status: 415 })
+      return NextResponse.json({ error: 'Formato de solicitud inválido.' }, { status: 415 })
     }
 
     const contentLength = Number(req.headers.get('content-length') || 0)
@@ -43,7 +44,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (!checkRateLimit(getClientIp(req))) {
-      return NextResponse.json({ error: 'Demasiados intentos. Intenta de nuevo mas tarde.' }, { status: 429 })
+      return NextResponse.json({ error: 'Demasiados intentos. Intenta de nuevo más tarde.' }, { status: 429 })
     }
 
     const payload = (await req.json()) as ContactPayload
@@ -51,23 +52,26 @@ export async function POST(req: NextRequest) {
 
     if (validation.isBot) return NextResponse.json({ success: true })
     if (!validation.data) {
-      return NextResponse.json({ error: validation.error || 'Solicitud invalida.' }, { status: 400 })
+      return NextResponse.json({ error: validation.error || 'Solicitud inválida.' }, { status: 400 })
     }
 
     const resendApiKey = process.env.RESEND_API_KEY
     if (!resendApiKey) {
-      return NextResponse.json({ error: 'El servicio de contacto no esta configurado.' }, { status: 503 })
+      return NextResponse.json({ error: 'El servicio de contacto no está configurado.' }, { status: 503 })
     }
 
     const resend = new Resend(resendApiKey)
     const { name, email, phone, service, message } = validation.data
     const settings = await getSiteSettings()
-    const recipient = settings.email || 'info@atenea-outsourcing.com'
-    const emailContent = createContactEmail({ name, email, phone, service, message })
+    const recipients = getContactRecipients(settings.email, settings.emailSecondary)
+    const emailContent = createContactEmail(
+      { name, email, phone, service, message },
+      process.env.NEXT_PUBLIC_SITE_URL,
+    )
 
     await resend.emails.send({
       from: 'Atenea CMS <noreply@atenea-outsourcing.com>',
-      to: [recipient],
+      to: recipients,
       replyTo: email,
       subject: emailContent.subject,
       text: emailContent.text,

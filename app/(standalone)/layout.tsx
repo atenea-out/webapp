@@ -1,4 +1,5 @@
-import { Playfair_Display, DM_Sans } from 'next/font/google'
+import { DM_Sans, Playfair_Display } from 'next/font/google'
+import type { Metadata } from 'next'
 import '../globals.css'
 
 const playfair = Playfair_Display({
@@ -14,6 +15,16 @@ const dmSans = DM_Sans({
   variable: '--font-dm-sans',
   display: 'swap',
 })
+
+export const metadata: Metadata = {
+  title: 'Portal de Clientes — Atenea Outsourcing',
+  description: 'Acceso seguro para clientes de Atenea Outsourcing.',
+  icons: {
+    icon: [{ url: '/media/images/favicon.png', type: 'image/png' }],
+    shortcut: '/media/images/favicon.png',
+    apple: '/media/images/favicon.png',
+  },
+}
 
 export default function StandaloneLayout({ children }: { children: React.ReactNode }) {
   return (

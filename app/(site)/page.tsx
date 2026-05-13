@@ -7,8 +7,9 @@ import { RazonesCTA }        from '@/components/sections/RazonesCTA'
 import { IndustriasPreview } from '@/components/sections/IndustriasPreview'
 import type { IndustriaPreviewItem } from '@/components/sections/IndustriasPreview'
 import { FundadoraPreview }  from '@/components/sections/FundadoraPreview'
+import type { TeamPreviewItem }  from '@/components/sections/FundadoraPreview'
 import type { Metadata }     from 'next'
-import { getSiteSettings, getServices, getIndustries, getFounder } from '@/lib/queries'
+import { getSiteSettings, getServices, getIndustries, getFounder, getTeam } from '@/lib/queries'
 import { getIcon } from '@/lib/icons'
 import type { Media } from '@/payload-types'
 
@@ -30,11 +31,12 @@ function slugify(text: string) {
 }
 
 export default async function HomePage() {
-  const [settings, services, industries, founder] = await Promise.all([
+  const [settings, services, industries, founder, team] = await Promise.all([
     getSiteSettings(),
     getServices(),
     getIndustries(),
     getFounder(),
+    getTeam(),
   ])
 
   // Services for the preview grid (first 6)
@@ -90,6 +92,17 @@ export default async function HomePage() {
   const founderBioParagraphs =
     settings.fundadoraBioShort?.map((p) => p.text).filter(Boolean) ?? null
   const founderChips = founder?.shortCredentials?.map((c) => c.text).filter(Boolean) ?? null
+  const teamPreviewItems: TeamPreviewItem[] = team.map((member) => {
+    const photo = member.photo && typeof member.photo !== 'number' ? (member.photo as Media) : null
+
+    return {
+      name: member.name,
+      role: member.role,
+      photoUrl: photo?.url,
+      photoAlt: photo?.alt,
+      summary: member.summary,
+    }
+  })
 
   return (
     <>
@@ -124,6 +137,11 @@ export default async function HomePage() {
         bioParagraphs={founderBioParagraphs}
         chips={founderChips}
         linkedin={founder?.linkedin}
+        mode={settings.teamSectionMode}
+        sectionDescription={settings.teamSectionDescription}
+        sectionEyebrow={settings.teamSectionEyebrow}
+        sectionTitle={settings.teamSectionTitle}
+        team={teamPreviewItems}
       />
     </>
   )

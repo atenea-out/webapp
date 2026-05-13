@@ -8,7 +8,7 @@ import { settingText } from '@/lib/settings-text'
 
 export const metadata: Metadata = {
   title: 'Noticias',
-  description: 'Articulos y novedades sobre contabilidad, finanzas, tributacion y legislacion laboral en Ecuador.',
+  description: 'Artículos y novedades sobre contabilidad, finanzas, tributación y legislación laboral en Ecuador.',
 }
 
 export const revalidate = 60
@@ -51,11 +51,11 @@ export default async function NoticiasPage() {
     return (
       <section className="py-20 px-6 md:px-[60px] bg-[var(--cream-light)] min-h-[60vh]">
         <div className="max-w-[780px] mx-auto text-center">
-          <h1 className="font-[family-name:var(--font-playfair)] text-[32px] font-medium text-[var(--dark)] mb-4">
+          <h1 className="font-[family-name:var(--font-display)] text-[32px] font-medium text-[var(--navy)] mb-4">
             {settingText(settings, 'newsEmptyTitle', 'Noticias')}
           </h1>
           <p className="text-[15px] text-[var(--gray)]">
-            {settingText(settings, 'newsEmptyText', 'Aun no hay noticias publicadas. Vuelve pronto.')}
+            {settingText(settings, 'newsEmptyText', 'Aún no hay noticias publicadas. Vuelve pronto.')}
           </p>
         </div>
       </section>
@@ -66,19 +66,19 @@ export default async function NoticiasPage() {
 
   return (
     <>
-      <section className="bg-[var(--dark)] pt-20 pb-16 px-6 md:px-[60px] border-b-[3px] border-[var(--gold)]">
+      <section className="bg-[var(--navy)] pt-20 pb-16 px-6 md:px-[60px] border-b border-white/[0.08]">
         <div className="max-w-[1280px] mx-auto">
-          <span className="section-tag" style={{ color: 'var(--gold-light)' }}>
+          <span className="section-tag text-[var(--coral)]">
             {settingText(settings, 'newsPageEyebrow', 'Actualidad')}
           </span>
-          <h1 className="font-[family-name:var(--font-playfair)] text-[clamp(32px,4vw,52px)] font-medium text-[var(--cream)] leading-[1.1] mt-1 mb-5">
-            {settingText(settings, 'newsPageTitle', 'Noticias y Articulos')}
+          <h1 className="font-[family-name:var(--font-display)] text-[clamp(32px,4vw,52px)] font-medium text-[var(--cream)] leading-[1.1] mt-1 mb-5">
+            {settingText(settings, 'newsPageTitle', 'Noticias y Artículos')}
           </h1>
-          <p className="text-[16px] font-light text-[var(--gray-light)] leading-[1.75] max-w-[520px]">
+          <p className="text-[16px] font-light text-white/68 leading-[1.75] max-w-[560px]">
             {settingText(
               settings,
               'newsPageDescription',
-              'Analisis, guias y novedades sobre el entorno tributario, contable y financiero en Ecuador y Latinoamerica.',
+              'Análisis, guías y novedades sobre el entorno tributario, contable y financiero en Ecuador y Latinoamérica.',
             )}
           </p>
         </div>
@@ -88,7 +88,7 @@ export default async function NoticiasPage() {
         <div className="max-w-[1280px] mx-auto">
           <Link
             href={`/noticias/${featured.slug}`}
-            className="group block mb-10 bg-[var(--white)] border border-[var(--cream-dark)] rounded-sm overflow-hidden hover:border-[var(--gold)]/40 hover:shadow-[0_8px_40px_rgba(0,0,0,0.06)] transition-all duration-300"
+            className="group block mb-10 bg-[var(--white)] border border-[#d8e2eb] rounded-sm overflow-hidden hover:border-[var(--coral)]/45 hover:shadow-[0_8px_40px_rgba(2,48,68,0.08)] transition-all duration-300"
           >
             <div className="grid grid-cols-1 lg:grid-cols-2">
               <div className="aspect-[16/9] lg:aspect-auto bg-gradient-to-br from-[var(--cream)] to-[var(--cream-dark)] flex items-center justify-center relative overflow-hidden">
@@ -101,7 +101,7 @@ export default async function NoticiasPage() {
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 ) : (
-                  <span className="font-[family-name:var(--font-playfair)] text-[60px] font-light text-[var(--cream-dark)]">A</span>
+                  <span className="font-[family-name:var(--font-display)] text-[60px] font-light text-[#c8d3dc]">A</span>
                 )}
               </div>
               <div className="p-8 md:p-12 flex flex-col justify-center">
@@ -113,14 +113,14 @@ export default async function NoticiasPage() {
                   )}
                   <span className="text-[11px] text-[var(--gray-light)]">{formatDate(featured.publishedAt)}</span>
                 </div>
-                <h2 className="font-[family-name:var(--font-playfair)] text-[clamp(20px,2.5vw,28px)] font-medium text-[var(--dark)] leading-[1.25] mb-4">
+                <h2 className="font-[family-name:var(--font-display)] text-[clamp(20px,2.5vw,28px)] font-medium text-[var(--navy)] leading-[1.25] mb-4">
                   {featured.title}
                 </h2>
                 {featured.excerpt && (
                   <p className="text-[14px] text-[var(--gray)] leading-[1.75] mb-6">{featured.excerpt}</p>
                 )}
-                <div className="flex items-center gap-1.5 text-[11px] tracking-[0.1em] uppercase text-[var(--gold)] font-medium font-[family-name:var(--font-dm-sans)]">
-                  {settingText(settings, 'newsReadLabel', 'Leer articulo')} <ArrowUpRight size={13} />
+                <div className="flex items-center gap-1.5 text-[11px] tracking-[0.1em] uppercase text-[var(--coral)] font-medium font-[family-name:var(--font-body)]">
+                  {settingText(settings, 'newsReadLabel', 'Leer artículo')} <ArrowUpRight size={13} />
                 </div>
               </div>
             </div>
@@ -134,7 +134,7 @@ export default async function NoticiasPage() {
                   <Link
                     key={post.slug}
                     href={`/noticias/${post.slug}`}
-                    className="group flex flex-col bg-[var(--white)] border border-[var(--cream-dark)] rounded-sm overflow-hidden hover:border-[var(--gold)]/40 hover:shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300"
+                    className="group flex flex-col bg-[var(--white)] border border-[#d8e2eb] rounded-sm overflow-hidden hover:border-[var(--coral)]/45 hover:shadow-[0_4px_20px_rgba(2,48,68,0.07)] transition-all duration-300"
                   >
                     <div className="aspect-[16/9] bg-gradient-to-br from-[var(--cream)] to-[var(--cream-dark)] flex items-center justify-center relative overflow-hidden">
                       {imgUrl ? (
@@ -146,7 +146,7 @@ export default async function NoticiasPage() {
                           sizes="(max-width: 1024px) 50vw, 33vw"
                         />
                       ) : (
-                        <span className="font-[family-name:var(--font-playfair)] text-[40px] font-light text-[var(--cream-dark)]">A</span>
+                        <span className="font-[family-name:var(--font-display)] text-[40px] font-light text-[#c8d3dc]">A</span>
                       )}
                     </div>
                     <div className="p-6 flex flex-col flex-1">
@@ -160,14 +160,14 @@ export default async function NoticiasPage() {
                           <CalendarBlank size={11} /> {formatDate(post.publishedAt)}
                         </span>
                       </div>
-                      <h3 className="font-[family-name:var(--font-playfair)] text-[17px] font-medium text-[var(--dark)] leading-[1.3] mb-3 flex-1">
+                      <h3 className="font-[family-name:var(--font-display)] text-[17px] font-medium text-[var(--navy)] leading-[1.3] mb-3 flex-1">
                         {post.title}
                       </h3>
                       {post.excerpt && (
                         <p className="text-[13px] text-[var(--gray)] leading-[1.7] mb-4 line-clamp-3">{post.excerpt}</p>
                       )}
-                      <div className="flex items-center gap-1 text-[11px] tracking-[0.08em] uppercase text-[var(--gold)] font-medium mt-auto font-[family-name:var(--font-dm-sans)]">
-                        {settingText(settings, 'newsReadMoreLabel', 'Leer mas')} <ArrowUpRight size={12} />
+                      <div className="flex items-center gap-1 text-[11px] tracking-[0.08em] uppercase text-[var(--coral)] font-medium mt-auto font-[family-name:var(--font-body)]">
+                        {settingText(settings, 'newsReadMoreLabel', 'Leer más')} <ArrowUpRight size={12} />
                       </div>
                     </div>
                   </Link>

@@ -6,6 +6,7 @@ import { DotsThreeCircle, Flask, GraduationCap, Scales, ShoppingCart } from '@ph
 import type { IconWeight } from '@phosphor-icons/react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Button } from '@/components/ui/Button'
+import { AnimateIn } from '@/components/ui/AnimateIn'
 
 export type IndustriaPreviewItem = {
   id: string
@@ -49,16 +50,20 @@ function IndustryIcon({
   }
 }
 
-export function IndustriasPreview({ industrias: industriasProp }: { industrias?: IndustriaPreviewItem[] | null } = {}) {
+export function IndustriasPreview({
+  industrias: industriasProp,
+}: {
+  industrias?: IndustriaPreviewItem[] | null
+} = {}) {
   const industrias = industriasProp && industriasProp.length > 0 ? industriasProp : fallback
   const [active, setActive] = useState(industrias[0].id)
-  const current = industrias.find((i) => i.id === active) ?? industrias[0]
+  const currentIndex = industrias.findIndex((i) => i.id === active)
+  const current = currentIndex >= 0 ? industrias[currentIndex] : industrias[0]
 
   return (
-    <section className="py-[var(--section-pad)] px-6 md:px-[60px] bg-white">
-      <div className="max-w-[1280px] mx-auto">
-
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
+    <section className="bg-white px-6 py-[var(--section-pad)] md:px-[60px]">
+      <div className="mx-auto max-w-[1280px]">
+        <AnimateIn className="mb-12 flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <SectionHeader
             tag="Sectores"
             title="Experiencia en Industrias"
@@ -67,38 +72,81 @@ export function IndustriasPreview({ industrias: industriasProp }: { industrias?:
           <Button href="/contacto" variant="primary" size="md" className="flex-shrink-0 self-start lg:self-auto">
             Contáctanos
           </Button>
-        </div>
+        </AnimateIn>
 
-        {/* Tab buttons */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {industrias.map(({ id, label, iconName }) => (
-            <button
-              key={id}
-              onClick={() => setActive(id)}
-              className={clsx(
-                'flex items-center gap-2 px-4 py-2.5 text-[12px] font-medium tracking-[0.05em] uppercase rounded-sm border transition-all duration-200 font-[family-name:var(--font-body)]',
-                active === id
-                  ? 'bg-[var(--navy)] text-white border-[var(--navy)]'
-                  : 'bg-transparent text-[var(--gray-mid)] border-[#e2e8f0] hover:border-[var(--navy)] hover:text-[var(--navy)]',
-              )}
-            >
-              <IndustryIcon name={iconName} size={14} weight={active === id ? 'fill' : 'duotone'} />
-              {label}
-            </button>
-          ))}
-        </div>
+        <div className="grid gap-px border border-[var(--navy)]/10 bg-[var(--navy)]/10 lg:grid-cols-[0.44fr_0.56fr]">
+          <AnimateIn>
+            <div className="bg-white p-4 md:p-5">
+              <div className="grid gap-px bg-[var(--navy)]/10">
+                {industrias.map(({ id, label, iconName }) => {
+                  const isActive = active === id
 
-        {/* Content panel */}
-        <div className="bg-[var(--bg)] border border-[#e2e8f0] rounded-sm p-8 md:p-12 border-l-4 border-l-[var(--coral)]">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-10 h-10 rounded-full bg-[var(--coral-muted)] border border-[var(--coral-border)] flex items-center justify-center flex-shrink-0">
-              <IndustryIcon name={current.iconName} size={20} color="var(--coral)" weight="duotone" />
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => setActive(id)}
+                      className={clsx(
+                        'group relative flex min-h-[78px] items-center justify-between gap-5 bg-white px-5 py-4 text-left transition-colors duration-300',
+                        isActive ? 'text-[var(--navy)]' : 'text-[var(--gray-mid)] hover:bg-[#f8fafc] hover:text-[var(--navy)]',
+                      )}
+                    >
+                      <span
+                        className={clsx(
+                          'absolute inset-y-0 left-0 w-0.5 origin-top bg-[var(--coral)] transition-transform duration-300',
+                          isActive ? 'scale-y-100' : 'scale-y-0 group-hover:scale-y-100',
+                        )}
+                        aria-hidden="true"
+                      />
+                      <span className="flex min-w-0 items-center gap-4">
+                        <span className="truncate font-[family-name:var(--font-display)] text-[19px] font-medium leading-tight">
+                          {label}
+                        </span>
+                      </span>
+                      <span
+                        className={clsx(
+                          'flex h-9 w-9 shrink-0 items-center justify-center border transition-colors duration-300',
+                          isActive
+                            ? 'border-[var(--coral)]/35 bg-[var(--coral)]/8 text-[var(--coral)]'
+                            : 'border-[var(--navy)]/10 bg-[var(--bg)]/60 text-[var(--coral)]/65 group-hover:text-[var(--coral)]',
+                        )}
+                      >
+                        <IndustryIcon name={iconName} size={18} color="currentColor" weight={isActive ? 'fill' : 'duotone'} />
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
             </div>
-            <h3 className="font-[family-name:var(--font-display)] text-[22px] font-medium text-[var(--navy)]">
-              {current.label}
-            </h3>
-          </div>
-          <p className="text-[15px] text-[var(--gray-mid)] leading-[1.8] max-w-[760px]">{current.text}</p>
+          </AnimateIn>
+
+          <AnimateIn delay={80}>
+            <article className="relative flex min-h-[420px] h-full flex-col overflow-hidden bg-[var(--bg)] p-8 md:p-12">
+              <div
+                className="pointer-events-none absolute inset-0 opacity-[0.35]"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(rgba(6,58,71,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(6,58,71,.07) 1px, transparent 1px)',
+                  backgroundSize: '72px 72px',
+                  maskImage: 'linear-gradient(to bottom right, black, transparent 82%)',
+                }}
+                aria-hidden="true"
+              />
+
+              <div className="relative flex items-start justify-between gap-8">
+                <span className="font-[family-name:var(--font-body)] text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--coral)]">
+                  Sector activo
+                </span>
+              </div>
+
+              <div className="relative mt-auto max-w-[760px] border-l border-[var(--coral)]/35 pl-6 md:pl-8">
+                <h3 className="mb-5 font-[family-name:var(--font-display)] text-[clamp(34px,4vw,58px)] font-medium leading-[1.02] text-[var(--navy)]">
+                  {current.label}
+                </h3>
+                <p className="max-w-[680px] text-[16px] leading-[1.85] text-[var(--gray-mid)]">{current.text}</p>
+              </div>
+            </article>
+          </AnimateIn>
         </div>
       </div>
     </section>

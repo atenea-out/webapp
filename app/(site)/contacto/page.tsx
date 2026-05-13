@@ -1,12 +1,13 @@
-import { MapPin, Phone, EnvelopeSimple, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react/dist/ssr'
+import { MapPin, Phone, EnvelopeSimple } from '@phosphor-icons/react/dist/ssr'
 import { ContactForm } from '@/components/sections/ContactForm'
 import type { Metadata } from 'next'
 import { getSiteSettings, getServices } from '@/lib/queries'
 import { settingText } from '@/lib/settings-text'
+import { getSocialLinks } from '@/lib/social-links'
 
 export const metadata: Metadata = {
   title: 'Contacto',
-  description: 'Contactanos para recibir asesoria en contabilidad, finanzas y tributacion. Estamos en Quito, Ecuador.',
+  description: 'Contáctanos para recibir asesoría en contabilidad, finanzas y tributación. Estamos en Quito, Ecuador.',
 }
 
 export const revalidate = 60
@@ -18,9 +19,8 @@ export default async function ContactoPage() {
   const phoneHref = `tel:${(phone.match(/\+?\d+/g) || []).join('')}`
   const email = settings.email ?? 'info@atenea-outsourcing.com'
   const emailSecondary = settings.emailSecondary ?? ''
-  const address = settings.address ?? 'Alfonso Pereira E4-39 y Jorge Drom, Edificio de Oficinas Inaquito II. Quito - Ecuador'
-  const instagram = settings.instagram ?? 'https://www.instagram.com/ateneaoutsourcing'
-  const linkedin = settings.linkedin ?? 'https://www.linkedin.com/in/atenea-outsourcing-b0a850326/'
+  const address = settings.address ?? 'Alfonso Pereira E4-39 y Jorge Drom, Edificio de Oficinas Iñaquito II. Quito - Ecuador'
+  const socialLinks = getSocialLinks(settings)
   const serviceOptions = services.map((s) => s.title)
 
   return (
@@ -32,13 +32,13 @@ export default async function ContactoPage() {
             className="font-[family-name:var(--font-display)] font-medium text-[var(--cream)] leading-[1.1] mt-1 mb-5"
             style={{ fontSize: 'clamp(32px,4vw,52px)' }}
           >
-            {settingText(settings, 'contactPageTitle', 'Contactanos')}
+            {settingText(settings, 'contactPageTitle', 'Contáctanos')}
           </h1>
           <p className="text-[16px] font-light text-white/55 leading-[1.75] max-w-[480px]">
             {settingText(
               settings,
               'contactPageDescription',
-              'Estamos aqui para responder tus preguntas y escuchar tus necesidades. Escribenos o llamanos.',
+              'Estamos aquí para responder tus preguntas y escuchar tus necesidades. Escríbenos o llámanos.',
             )}
           </p>
         </div>
@@ -48,7 +48,7 @@ export default async function ContactoPage() {
         <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-5 gap-16">
           <div className="lg:col-span-2">
             <h2 className="font-[family-name:var(--font-display)] text-[22px] font-medium text-[var(--navy)] mb-8">
-              {settingText(settings, 'contactInfoTitle', 'Informacion de contacto')}
+              {settingText(settings, 'contactInfoTitle', 'Información de contacto')}
             </h2>
 
             <ul className="space-y-6 mb-10">
@@ -58,7 +58,7 @@ export default async function ContactoPage() {
                 </div>
                 <div>
                   <p className="text-[10px] tracking-[0.15em] uppercase text-[var(--gray-light)] mb-1.5 font-[family-name:var(--font-body)]">
-                    {settingText(settings, 'contactAddressLabel', 'Direccion')}
+                    {settingText(settings, 'contactAddressLabel', 'Dirección')}
                   </p>
                   <p className="text-[14px] text-[var(--navy)] leading-[1.7] font-[family-name:var(--font-body)] whitespace-pre-line">
                     {address}
@@ -71,7 +71,7 @@ export default async function ContactoPage() {
                 </div>
                 <div>
                   <p className="text-[10px] tracking-[0.15em] uppercase text-[var(--gray-light)] mb-1.5 font-[family-name:var(--font-body)]">
-                    {settingText(settings, 'contactPhoneLabel', 'Telefono')}
+                    {settingText(settings, 'contactPhoneLabel', 'Teléfono')}
                   </p>
                   <a
                     href={phoneHref}
@@ -107,32 +107,23 @@ export default async function ContactoPage() {
               </li>
             </ul>
 
-            {(instagram || linkedin) && (
+            {socialLinks.length > 0 && (
               <div>
                 <p className="text-[10px] tracking-[0.15em] uppercase text-[var(--gray-light)] mb-3 font-[family-name:var(--font-body)]">
                   {settingText(settings, 'contactSocialLabel', 'Redes sociales')}
                 </p>
                 <div className="flex gap-3">
-                  {instagram && (
+                  {socialLinks.map(({ Icon, label, url }) => (
                     <a
-                      href={instagram}
+                      key={`${label}-${url}`}
+                      href={url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#e2e8f0] text-[12px] text-[var(--gray-mid)] hover:text-[var(--navy)] hover:border-[var(--navy)] transition-all duration-200 font-[family-name:var(--font-body)]"
                     >
-                      <InstagramLogo size={14} /> Instagram
+                      <Icon size={14} /> {label}
                     </a>
-                  )}
-                  {linkedin && (
-                    <a
-                      href={linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#e2e8f0] text-[12px] text-[var(--gray-mid)] hover:text-[var(--navy)] hover:border-[var(--navy)] transition-all duration-200 font-[family-name:var(--font-body)]"
-                    >
-                      <LinkedinLogo size={14} /> LinkedIn
-                    </a>
-                  )}
+                  ))}
                 </div>
               </div>
             )}
@@ -140,7 +131,7 @@ export default async function ContactoPage() {
 
           <div className="lg:col-span-3 bg-white border border-[#e2e8f0] p-8 md:p-10">
             <h2 className="font-[family-name:var(--font-display)] text-[22px] font-medium text-[var(--navy)] mb-6">
-              {settingText(settings, 'contactFormTitle', 'Envianos un mensaje')}
+              {settingText(settings, 'contactFormTitle', 'Envíanos un mensaje')}
             </h2>
             <ContactForm serviceOptions={serviceOptions} />
           </div>

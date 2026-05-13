@@ -3,6 +3,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { seoPlugin } from '@payloadcms/plugin-seo'
+import { es } from '@payloadcms/translations/languages/es'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
@@ -56,12 +57,61 @@ const db = isPostgresUri
 export default buildConfig({
   admin: {
     user: 'users',
+    avatar: {
+      Component: {
+        path: '@/components/payload/AteneaUserAvatar#AteneaUserAvatar',
+      },
+    },
+    components: {
+      beforeDashboard: [
+        {
+          path: '@/components/payload/AteneaDashboardIntro#AteneaDashboardIntro',
+        },
+      ],
+      beforeLogin: [
+        {
+          path: '@/components/payload/AteneaLoginIntro#AteneaLoginIntro',
+        },
+      ],
+      graphics: {
+        Logo: {
+          path: '@/components/payload/AteneaAdminLogo#AteneaAdminLogo',
+        },
+      },
+      logout: {
+        Button: {
+          path: '@/components/payload/AteneaLogoutButton#AteneaLogoutButton',
+        },
+      },
+    },
     meta: {
+      title: 'Administración',
       titleSuffix: '- Atenea CMS',
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          url: '/media/images/favicon.png',
+        },
+        {
+          rel: 'shortcut icon',
+          type: 'image/png',
+          url: '/media/images/favicon.png',
+        },
+        {
+          rel: 'apple-touch-icon',
+          type: 'image/png',
+          url: '/media/images/favicon.png',
+        },
+      ],
     },
   },
   collections: [Posts, Services, Industries, Team, Media, Users],
   globals: [SiteSettings, Navigation],
+  i18n: {
+    supportedLanguages: { es },
+    fallbackLanguage: 'es',
+  },
   editor: lexicalEditor({}),
   sharp,
   secret: payloadSecret || 'atenea-dev-secret',

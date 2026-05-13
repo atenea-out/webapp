@@ -160,7 +160,7 @@ export function Navbar({
               Menu principal
             </p>
             <p className="mt-2 max-w-[310px] text-[13px] leading-[1.55] text-white/62">
-              Consultoria contable, tributaria y financiera para decisiones empresariales mas claras.
+              Consultoría contable, tributaria y financiera para decisiones empresariales más claras.
             </p>
           </div>
 

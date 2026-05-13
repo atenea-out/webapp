@@ -16,7 +16,7 @@ test('contact form validates an invalid email without navigating away', async ({
 
   await page.locator('input[name="name"]').fill('Ana Rojas')
   await page.locator('input[name="email"]').fill('bad-email')
-  await page.locator('textarea[name="message"]').fill('Necesito asesoria para mi empresa.')
+  await page.locator('textarea[name="message"]').fill('Necesito asesoría para mi empresa.')
   await page.getByRole('button', { name: /enviar/i }).click()
 
   await expect(page.locator('input[name="email"]')).toBeFocused()

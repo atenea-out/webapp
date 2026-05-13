@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { cleanMessage, cleanText, createContactEmail, validateContactPayload } from './contact'
+import { cleanMessage, cleanText, createContactEmail, getContactRecipients, validateContactPayload } from './contact'
 
 describe('contact helpers', () => {
   it('normalizes text fields and strips control characters', () => {
@@ -17,7 +17,7 @@ describe('contact helpers', () => {
       email: 'PATRICIA@example.com',
       phone: '+593 999 000 000',
       service: 'Legal e Impuestos',
-      message: 'Necesito asesoria para mi empresa.',
+      message: 'Necesito asesoría para mi empresa.',
     })
 
     expect(result.error).toBeUndefined()
@@ -34,7 +34,7 @@ describe('contact helpers', () => {
       'Campos requeridos incompletos.',
     )
     expect(validateContactPayload({ name: 'Ana', email: 'bad', message: 'Mensaje valido' }).error).toBe(
-      'Email invalido.',
+      'Email inválido.',
     )
     expect(validateContactPayload({ name: 'Ana', email: 'ana@example.com', message: 'corto' }).error).toBe(
       'El mensaje debe tener al menos 10 caracteres.',
@@ -53,16 +53,29 @@ describe('contact helpers', () => {
   })
 
   it('escapes user content in html email but preserves plain text', () => {
-    const email = createContactEmail({
-      name: '<Ana>',
-      email: 'ana@example.com',
-      phone: '',
-      service: 'Legal',
-      message: 'Hola <script>alert("x")</script>\nGracias',
-    })
+    const email = createContactEmail(
+      {
+        name: '<Ana>',
+        email: 'ana@example.com',
+        phone: '',
+        service: 'Legal',
+        message: 'Hola <script>alert("x")</script>\nGracias',
+      },
+      'https://atenea-outsourcing.com',
+    )
 
     expect(email.html).toContain('&lt;Ana&gt;')
     expect(email.html).toContain('&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;<br/>Gracias')
+    expect(email.html).toContain('https://atenea-outsourcing.com/logo.png')
+    expect(email.html).toContain('Atenea Outsourcing')
     expect(email.text).toContain('Hola <script>alert("x")</script>')
+  })
+
+  it('always includes required contact recipients and removes duplicates', () => {
+    expect(getContactRecipients('INFO@ATENEA-OUTSOURCING.COM', 'ventas@example.com')).toEqual([
+      'info@atenea-outsourcing.com',
+      'patricia.rojas@atenea-outsourcing.com',
+      'ventas@example.com',
+    ])
   })
 })

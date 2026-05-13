@@ -4,6 +4,17 @@ import { editorOrAdmin, publicRead } from '@/lib/access'
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: { singular: 'Medio', plural: 'Medios' },
+  hooks: {
+    beforeValidate: [
+      ({ data, req }) => {
+        if (data && !data.alt) {
+          data.alt = req.file?.name || data.filename || 'Imagen Atenea Outsourcing'
+        }
+
+        return data
+      },
+    ],
+  },
   access: {
     create: editorOrAdmin,
     read: publicRead,

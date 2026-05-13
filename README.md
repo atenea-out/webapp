@@ -7,7 +7,7 @@ Sitio corporativo de Atenea Outsourcing construido con Next.js, Payload CMS y Ta
 - Next.js App Router
 - Payload CMS
 - SQLite para desarrollo local
-- Neon Postgres para produccion
+- Neon Postgres para producción
 - Resend para email transaccional
 - Playwright y Vitest para pruebas
 
@@ -36,7 +36,7 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3001
 RESEND_API_KEY=
 ```
 
-En produccion, `DATABASE_URI` debe ser una connection string Postgres de Neon.
+En producción, `DATABASE_URI` debe ser una connection string Postgres de Neon.
 
 ## Scripts
 
@@ -54,7 +54,7 @@ npm run seed
 
 El deploy recomendado es GitHub + Coolify sobre Hostinger VPS, usando Neon como base de datos y un volumen persistente para uploads.
 
-Documentacion:
+Documentación:
 
 - `docs/github-workflow.md`
 - `docs/deploy-coolify.md`

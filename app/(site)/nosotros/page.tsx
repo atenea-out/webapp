@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { LinkedinLogo } from '@phosphor-icons/react/dist/ssr'
+import { LinkedinLogo, Medal, ShieldCheck, Handshake, Sparkle } from '@phosphor-icons/react/dist/ssr'
 import type { Metadata } from 'next'
 import { getFounder, getSiteSettings } from '@/lib/queries'
 import { getIcon } from '@/lib/icons'
@@ -13,6 +13,8 @@ export const metadata: Metadata = {
 }
 
 export const revalidate = 60
+
+const valueIcons = [Medal, ShieldCheck, Handshake, Sparkle]
 
 export default async function NosotrosPage() {
   const [founder, settings] = await Promise.all([getFounder(), getSiteSettings()])
@@ -84,19 +86,27 @@ export default async function NosotrosPage() {
             ))}
           </div>
           {valores.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {valores.map(({ title, desc }) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-px border border-[#d8e2eb] bg-[#d8e2eb]">
+              {valores.map(({ title, desc }, index) => {
+                const Icon = valueIcons[index % valueIcons.length]
+                return (
                 <div
                   key={title}
-                  className="bg-[var(--bg)] border border-[#e2e8f0] p-6 hover:border-[var(--navy)]/20 hover:shadow-[0_4px_24px_rgba(2,48,68,0.07)] transition-all duration-300"
+                  className="group relative min-h-[170px] overflow-hidden bg-white p-6 transition-colors duration-300 hover:bg-[var(--bg)]"
                 >
-                  <div className="w-1.5 h-1.5 rounded-full bg-[var(--coral)] mb-4" />
-                  <h3 className="font-[family-name:var(--font-display)] text-[17px] font-medium text-[var(--navy)] mb-2">
+                  <span className="absolute left-0 top-0 h-0.5 w-10 bg-[var(--coral)] transition-all duration-300 group-hover:w-20" />
+                  <div className="mb-7 flex items-start justify-end gap-5">
+                    <div className="flex h-9 w-9 items-center justify-center border border-[var(--coral-border)] bg-[var(--coral-muted)]">
+                      <Icon size={17} color="var(--coral)" weight="duotone" />
+                    </div>
+                  </div>
+                  <h3 className="font-[family-name:var(--font-display)] text-[19px] font-medium leading-tight text-[var(--navy)] mb-3">
                     {title}
                   </h3>
-                  <p className="text-[13px] text-[var(--gray-mid)] leading-[1.7]">{desc}</p>
+                  <p className="max-w-[260px] text-[13px] text-[var(--gray-mid)] leading-[1.75]">{desc}</p>
                 </div>
-              ))}
+                )
+              })}
             </div>
           )}
         </div>

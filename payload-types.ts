@@ -232,6 +232,10 @@ export interface Team {
   id: number;
   name: string;
   role: string;
+  /**
+   * Texto breve para tarjetas de equipo en el landing.
+   */
+  summary?: string | null;
   photo?: (number | null) | Media;
   bio?: {
     root: {
@@ -390,6 +394,10 @@ export interface Industry {
 export interface User {
   id: number;
   name: string;
+  /**
+   * Imagen visible en el perfil y la esquina superior del panel.
+   */
+  avatar?: (number | null) | Media;
   role?: ('admin' | 'editor') | null;
   updatedAt: string;
   createdAt: string;
@@ -589,6 +597,7 @@ export interface IndustriesSelect<T extends boolean = true> {
 export interface TeamSelect<T extends boolean = true> {
   name?: T;
   role?: T;
+  summary?: T;
   photo?: T;
   bio?: T;
   isFounder?: T;
@@ -672,6 +681,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  avatar?: T;
   role?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -747,6 +757,21 @@ export interface SiteSetting {
    * Sin + ni espacios. Ej: 593999828903
    */
   whatsappNumber?: string | null;
+  /**
+   * Agrega, ordena u oculta redes sociales sin tocar código. Si esta lista queda vacía, se usan Instagram y LinkedIn como respaldo.
+   */
+  socialLinks?:
+    | {
+        platform: 'instagram' | 'linkedin' | 'facebook' | 'youtube' | 'tiktok' | 'x' | 'whatsapp' | 'website';
+        /**
+         * Opcional. Si queda vacía se usa el nombre de la red.
+         */
+        label?: string | null;
+        url: string;
+        order?: number | null;
+        id?: string | null;
+      }[]
+    | null;
   instagram?: string | null;
   linkedin?: string | null;
   /**
@@ -826,6 +851,10 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  teamSectionMode?: ('founder' | 'team') | null;
+  teamSectionEyebrow?: string | null;
+  teamSectionTitle?: string | null;
+  teamSectionDescription?: string | null;
   /**
    * Párrafos de la sección Fundadora en el home
    */
@@ -960,6 +989,15 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   emailSecondary?: T;
   address?: T;
   whatsappNumber?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        label?: T;
+        url?: T;
+        order?: T;
+        id?: T;
+      };
   instagram?: T;
   linkedin?: T;
   metaDescription?: T;
@@ -1018,6 +1056,10 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  teamSectionMode?: T;
+  teamSectionEyebrow?: T;
+  teamSectionTitle?: T;
+  teamSectionDescription?: T;
   fundadoraBioShort?:
     | T
     | {

@@ -29,6 +29,14 @@ export const Team: CollectionConfig = {
       required: true,
     },
     {
+      name: 'summary',
+      type: 'textarea',
+      label: 'Descripción corta',
+      admin: {
+        description: 'Texto breve para tarjetas de equipo en el landing.',
+      },
+    },
+    {
       name: 'photo',
       type: 'upload',
       relationTo: 'media',

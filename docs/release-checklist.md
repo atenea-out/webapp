@@ -5,7 +5,7 @@
 - [ ] CI verde en GitHub.
 - [ ] `npm audit --omit=dev` revisado.
 - [ ] Cambios de Payload probados en `/admin`.
-- [ ] Landing y paginas internas revisadas.
+- [ ] Landing y páginas internas revisadas.
 - [ ] Formulario de contacto probado.
 - [ ] Uploads probados si hubo cambios en media.
 - [ ] Variables de Coolify confirmadas.

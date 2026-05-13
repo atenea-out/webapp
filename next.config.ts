@@ -19,6 +19,10 @@ if (config.experimental && 'enableServerFastRefresh' in config.experimental) {
   delete (config.experimental as Record<string, unknown>).enableServerFastRefresh
 }
 
+if (config.experimental && 'turbopackServerFastRefresh' in config.experimental) {
+  delete (config.experimental as Record<string, unknown>).turbopackServerFastRefresh
+}
+
 if (config.turbopack && (config.turbopack as Record<string, unknown>).resolveAlias) {
   const alias = (config.turbopack as Record<string, unknown>).resolveAlias as Record<string, string>
   alias['@payload-config'] = './payload.config.ts'

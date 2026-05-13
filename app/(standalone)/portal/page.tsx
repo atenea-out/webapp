@@ -248,12 +248,20 @@ export default function PortalPage() {
                   Te notificaremos cuando esté listo.
                 </p>
               </div>
-              <Link
-                href="/"
-                className="inline-block mt-2 text-[11px] tracking-[0.1em] uppercase text-[var(--coral)] hover:underline"
-              >
-                Volver al inicio
-              </Link>
+              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                <Link
+                  href="/"
+                  className="inline-flex min-h-10 items-center justify-center border border-[var(--navy)]/12 px-4 text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--navy)] transition-colors hover:border-[var(--navy)]/30 hover:bg-[var(--navy)]/[0.03]"
+                >
+                  Volver al sitio
+                </Link>
+                <Link
+                  href="/contacto"
+                  className="inline-flex min-h-10 items-center justify-center bg-[var(--coral)] px-4 text-[11px] font-medium uppercase tracking-[0.1em] text-white transition-colors hover:bg-[var(--coral-light)]"
+                >
+                  Solicitar acceso
+                </Link>
+              </div>
             </div>
           )}
 

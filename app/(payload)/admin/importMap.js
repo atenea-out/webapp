@@ -33,6 +33,7 @@ import { AteneaDashboardIntro as AteneaDashboardIntro_c004b8927c6001604db1c2740f
 import { AteneaLoginIntro as AteneaLoginIntro_472e8d694522af4271b7498a69339d71 } from '@/components/payload/AteneaLoginIntro'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
+/** @type import('payload').ImportMap */
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,

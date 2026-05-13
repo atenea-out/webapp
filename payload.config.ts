@@ -2,6 +2,7 @@ import { buildConfig } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { es } from '@payloadcms/translations/languages/es'
 import path from 'path'
@@ -29,6 +30,9 @@ const isProductionBuild = process.env.NEXT_PHASE === 'phase-production-build'
 const shouldEnforceProductionDatabase = isProduction && !isProductionBuild
 const isPostgresUri =
   databaseUri?.startsWith('postgres://') || databaseUri?.startsWith('postgresql://')
+const resendApiKey = process.env.RESEND_API_KEY
+const payloadEmailFromAddress = process.env.PAYLOAD_EMAIL_FROM_ADDRESS || 'noreply@atenea-outsourcing.com'
+const payloadEmailFromName = process.env.PAYLOAD_EMAIL_FROM_NAME || 'Atenea Outsourcing CMS'
 
 if (isProduction && !payloadSecret) {
   throw new Error('PAYLOAD_SECRET is required in production.')
@@ -55,6 +59,15 @@ const db = isPostgresUri
     })
 
 export default buildConfig({
+  ...(resendApiKey
+    ? {
+        email: resendAdapter({
+          apiKey: resendApiKey,
+          defaultFromAddress: payloadEmailFromAddress,
+          defaultFromName: payloadEmailFromName,
+        }),
+      }
+    : {}),
   admin: {
     user: 'users',
     theme: 'dark',

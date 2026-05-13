@@ -32,6 +32,29 @@ function checkRateLimit(key: string) {
   return true
 }
 
+async function verifyTurnstile(token: string, ip: string) {
+  const secret = process.env.TURNSTILE_SECRET_KEY
+  const isRequired = process.env.NODE_ENV === 'production' || Boolean(secret)
+
+  if (!isRequired) return true
+  if (!secret || !token) return false
+
+  const formData = new FormData()
+  formData.append('secret', secret)
+  formData.append('response', token)
+  if (ip !== 'unknown') formData.append('remoteip', ip)
+
+  const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    body: formData,
+  })
+
+  if (!response.ok) return false
+
+  const result = (await response.json()) as { success?: boolean }
+  return result.success === true
+}
+
 export async function POST(req: NextRequest) {
   try {
     if (req.headers.get('content-type')?.includes('application/json') !== true) {
@@ -43,7 +66,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'El mensaje es demasiado largo.' }, { status: 413 })
     }
 
-    if (!checkRateLimit(getClientIp(req))) {
+    const clientIp = getClientIp(req)
+    if (!checkRateLimit(clientIp)) {
       return NextResponse.json({ error: 'Demasiados intentos. Intenta de nuevo más tarde.' }, { status: 429 })
     }
 
@@ -53,6 +77,11 @@ export async function POST(req: NextRequest) {
     if (validation.isBot) return NextResponse.json({ success: true })
     if (!validation.data) {
       return NextResponse.json({ error: validation.error || 'Solicitud inválida.' }, { status: 400 })
+    }
+
+    const isHuman = await verifyTurnstile(validation.data.turnstileToken, clientIp)
+    if (!isHuman) {
+      return NextResponse.json({ error: 'No pudimos validar la verificaciÃ³n de seguridad.' }, { status: 400 })
     }
 
     const resendApiKey = process.env.RESEND_API_KEY

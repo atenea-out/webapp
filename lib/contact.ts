@@ -13,6 +13,7 @@ export type ContactPayload = {
   service?: unknown
   message?: unknown
   website?: unknown
+  turnstileToken?: unknown
 }
 
 export type ContactData = {
@@ -21,7 +22,10 @@ export type ContactData = {
   phone: string
   service: string
   message: string
+  turnstileToken: string
 }
+
+type ContactEmailData = Omit<ContactData, 'turnstileToken'>
 
 export type ContactValidation = {
   data?: ContactData
@@ -72,6 +76,7 @@ export function validateContactPayload(payload: ContactPayload): ContactValidati
     phone: cleanText(payload.phone, 40),
     service: cleanText(payload.service, 120),
     message: cleanMessage(payload.message),
+    turnstileToken: cleanText(payload.turnstileToken, 2048),
   }
 
   if (!data.name || !data.email || !data.message) {
@@ -90,7 +95,7 @@ export function validateContactPayload(payload: ContactPayload): ContactValidati
   return { data }
 }
 
-export function createContactEmail(data: ContactData, siteUrl = process.env.NEXT_PUBLIC_SITE_URL) {
+export function createContactEmail(data: ContactEmailData, siteUrl = process.env.NEXT_PUBLIC_SITE_URL) {
   const safeName = escapeHtml(data.name)
   const safeEmail = escapeHtml(data.email)
   const safePhone = escapeHtml(data.phone)

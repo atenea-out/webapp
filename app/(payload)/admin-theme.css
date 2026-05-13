@@ -141,25 +141,13 @@
 
 .nav .nav-group__content a:hover,
 .nav .nav-group__content a:focus-visible {
-  background: rgba(255, 255, 255, 0.035);
-}
-
-.nav .nav-group__content a:hover::before,
-.nav .nav-group__content a:focus-visible::before {
-  opacity: 1;
+  background: rgba(255, 255, 255, 0.028);
+  color: rgba(255, 255, 255, 0.9);
+  outline: none;
 }
 
 .nav .nav-group__content a::before {
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: 50%;
-  width: 2px;
-  height: 14px;
-  background: rgba(239, 98, 94, 0.72);
-  opacity: 0;
-  transform: translateY(-50%);
-  transition: opacity 160ms ease;
+  display: none;
 }
 
 .nav .nav-group--collapsed {

@@ -1,6 +1,7 @@
 import React from 'react'
 
 const quickLinks = [
+  { href: '/', label: 'Ver sitio' },
   { href: '/admin/globals/site-settings', label: 'Landing y ajustes' },
   { href: '/admin/globals/navigation', label: 'Navegación' },
   { href: '/admin/collections/services', label: 'Servicios' },

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { PaperPlaneTilt, CircleNotch, CheckCircle, WarningCircle } from '@phosphor-icons/react'
 
 const defaultServiceOptions = [
@@ -15,11 +15,82 @@ const defaultServiceOptions = [
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
+type TurnstileRenderOptions = {
+  sitekey: string
+  callback: (token: string) => void
+  'expired-callback': () => void
+  'error-callback': () => void
+  theme: 'light' | 'dark' | 'auto'
+}
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: HTMLElement, options: TurnstileRenderOptions) => string
+      reset: (widgetId?: string) => void
+    }
+  }
+}
+
 export function ContactForm({ serviceOptions }: { serviceOptions?: string[] } = {}) {
   const options = serviceOptions && serviceOptions.length > 0 ? serviceOptions : defaultServiceOptions
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+  const turnstileRef = useRef<HTMLDivElement | null>(null)
+  const turnstileWidgetId = useRef<string | null>(null)
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError]   = useState('')
-  const [form, setForm]     = useState({ name: '', email: '', phone: '', service: '', message: '', website: '' })
+  const [captchaError, setCaptchaError] = useState('')
+  const [form, setForm]     = useState({
+    name: '',
+    email: '',
+    phone: '',
+    service: '',
+    message: '',
+    website: '',
+    turnstileToken: '',
+  })
+
+  useEffect(() => {
+    if (!turnstileSiteKey || !turnstileRef.current || turnstileWidgetId.current) return
+
+    const renderTurnstile = () => {
+      if (!window.turnstile || !turnstileRef.current || turnstileWidgetId.current) return
+      turnstileWidgetId.current = window.turnstile.render(turnstileRef.current, {
+        sitekey: turnstileSiteKey,
+        theme: 'light',
+        callback: (token) => {
+          setCaptchaError('')
+          setForm((prev) => ({ ...prev, turnstileToken: token }))
+        },
+        'expired-callback': () => {
+          setForm((prev) => ({ ...prev, turnstileToken: '' }))
+          setCaptchaError('La verificación expiró. Inténtalo nuevamente.')
+        },
+        'error-callback': () => {
+          setForm((prev) => ({ ...prev, turnstileToken: '' }))
+          setCaptchaError('No pudimos cargar la verificación de seguridad.')
+        },
+      })
+    }
+
+    if (window.turnstile) {
+      renderTurnstile()
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
+    script.async = true
+    script.defer = true
+    script.onload = renderTurnstile
+    document.head.appendChild(script)
+  }, [turnstileSiteKey])
+
+  const resetTurnstile = () => {
+    if (!turnstileWidgetId.current) return
+    window.turnstile?.reset(turnstileWidgetId.current)
+    setForm((prev) => ({ ...prev, turnstileToken: '' }))
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -29,12 +100,19 @@ export function ContactForm({ serviceOptions }: { serviceOptions?: string[] } = 
     e.preventDefault()
     setStatus('loading')
     setError('')
+    setCaptchaError('')
+    if (turnstileSiteKey && !form.turnstileToken) {
+      setCaptchaError('Completa la verificación de seguridad para enviar el mensaje.')
+      setStatus('idle')
+      return
+    }
     try {
       const res  = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
       const data = await res.json()
-      if (!res.ok) { setError(data.error || 'Error al enviar.'); setStatus('error'); return }
+      if (!res.ok) { setError(data.error || 'Error al enviar.'); setStatus('error'); resetTurnstile(); return }
       setStatus('success')
-      setForm({ name: '', email: '', phone: '', service: '', message: '', website: '' })
+      setForm({ name: '', email: '', phone: '', service: '', message: '', website: '', turnstileToken: '' })
+      resetTurnstile()
     } catch {
       setError('Error de conexión. Intenta nuevamente.')
       setStatus('error')
@@ -135,6 +213,17 @@ export function ContactForm({ serviceOptions }: { serviceOptions?: string[] } = 
       )}
 
       <div className="flex flex-col gap-3">
+        {turnstileSiteKey && (
+          <div>
+            <div ref={turnstileRef} className="min-h-[65px]" />
+            {captchaError && (
+              <p className="mt-2 text-[12px] text-red-600 font-[family-name:var(--font-body)]">
+                {captchaError}
+              </p>
+            )}
+          </div>
+        )}
+
         <button
           type="submit"
           disabled={status === 'loading'}

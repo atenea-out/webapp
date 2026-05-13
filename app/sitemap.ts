@@ -1,33 +1,39 @@
 import type { MetadataRoute } from 'next'
+import { getPosts, getServices } from '@/lib/queries'
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://atenea-outsourcing.com'
+const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://atenea-outsourcing.com').replace(/\/$/, '')
 
-const servicesSlugs = [
-  'outsourcing-contable-financiero',
-  'nomina-cumplimiento-laboral',
-  'tesoreria',
-  'apoyo-administrativo',
-  'revisiones-especiales',
-  'legal-impuestos',
-]
-
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [services, posts] = await Promise.all([getServices(), getPosts(100)])
+  const now = new Date()
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: BASE_URL,                     lastModified: new Date(), changeFrequency: 'weekly',  priority: 1.0 },
-    { url: `${BASE_URL}/nosotros`,        lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/servicios`,       lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/industrias`,      lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/noticias`,        lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
-    { url: `${BASE_URL}/contacto`,        lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.7 },
-    { url: `${BASE_URL}/politica-de-privacidad`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
+    { url: baseUrl, lastModified: now, changeFrequency: 'weekly', priority: 1.0 },
+    { url: `${baseUrl}/nosotros`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/servicios`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${baseUrl}/industrias`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/noticias`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/contacto`, lastModified: now, changeFrequency: 'yearly', priority: 0.7 },
+    {
+      url: `${baseUrl}/politica-de-privacidad`,
+      lastModified: now,
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
   ]
 
-  const serviceRoutes: MetadataRoute.Sitemap = servicesSlugs.map((slug) => ({
-    url: `${BASE_URL}/servicios/${slug}`,
-    lastModified: new Date(),
+  const serviceRoutes: MetadataRoute.Sitemap = services.filter((service) => service.slug).map((service) => ({
+    url: `${baseUrl}/servicios/${service.slug}`,
+    lastModified: service.updatedAt ? new Date(service.updatedAt) : now,
     changeFrequency: 'monthly',
     priority: 0.8,
   }))
 
-  return [...staticRoutes, ...serviceRoutes]
+  const postRoutes: MetadataRoute.Sitemap = posts.filter((post) => post.slug).map((post) => ({
+    url: `${baseUrl}/noticias/${post.slug}`,
+    lastModified: post.updatedAt ? new Date(post.updatedAt) : post.publishedAt ? new Date(post.publishedAt) : now,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }))
+
+  return [...staticRoutes, ...serviceRoutes, ...postRoutes]
 }

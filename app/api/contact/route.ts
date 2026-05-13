@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
 
     const isHuman = await verifyTurnstile(validation.data.turnstileToken, clientIp)
     if (!isHuman) {
-      return NextResponse.json({ error: 'No pudimos validar la verificaciÃ³n de seguridad.' }, { status: 400 })
+      return NextResponse.json({ error: 'No pudimos validar la verificación de seguridad.' }, { status: 400 })
     }
 
     const resendApiKey = process.env.RESEND_API_KEY

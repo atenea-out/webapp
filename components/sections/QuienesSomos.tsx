@@ -1,7 +1,14 @@
 import Image from 'next/image'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 
-type Valor = { title: string; description: string; imgSrc: string }
+type Valor = { title: string; description: string; imgSrc: string; eyebrow?: string | null }
+
+const valueEyebrows: Record<string, string> = {
+  excelencia: 'Rigor verificable',
+  confidencialidad: 'Custodia financiera',
+  compromiso: 'Relación de largo plazo',
+  innovación: 'Criterio actualizado',
+}
 
 const staticAboutImages: Record<string, string> = {
   '/media/images/quienes-excelencia.png': '/assets/media/images/quienes-excelencia.png',
@@ -14,27 +21,37 @@ function resolveAboutImage(src: string) {
   return staticAboutImages[src] || src
 }
 
+function getValueEyebrow(title: string, eyebrow?: string | null) {
+  if (eyebrow) return eyebrow
+
+  return valueEyebrows[title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')] || 'Criterio Atenea'
+}
+
 const defaultValores: Valor[] = [
   {
     title: 'Excelencia',
     description:
       'Estándares de calidad superiores en cada entregable, con procesos auditables y resultados verificables.',
     imgSrc: '/assets/media/images/quienes-excelencia.png',
+    eyebrow: 'Rigor verificable',
   },
   {
     title: 'Confidencialidad',
     description: 'Tratamiento seguro y estricto de la información financiera de cada cliente.',
     imgSrc: '/assets/media/images/quienes-confidencialidad.png',
+    eyebrow: 'Custodia financiera',
   },
   {
     title: 'Compromiso',
     description: 'Relaciones de largo plazo basadas en resultados reales y confianza mutua.',
     imgSrc: '/assets/media/images/quienes-compromiso.png',
+    eyebrow: 'Relación de largo plazo',
   },
   {
     title: 'Innovación',
     description: 'Actualización permanente ante cambios normativos y avances tecnológicos del sector.',
     imgSrc: '/assets/media/images/quienes-innovacion.png',
+    eyebrow: 'Criterio actualizado',
   },
 ]
 
@@ -66,7 +83,7 @@ export function QuienesSomos({ text, valores: valoresProp }: QuienesSomosProps =
         </AnimateIn>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {valores.map(({ title, description, imgSrc }) => (
+          {valores.map(({ title, description, imgSrc, eyebrow }) => (
             <article
               key={title}
               className="group relative h-56 md:h-64 w-full overflow-hidden bg-[var(--navy)] border border-[var(--navy)]/10"
@@ -100,7 +117,7 @@ export function QuienesSomos({ text, valores: valoresProp }: QuienesSomosProps =
               <div className="relative z-10 flex h-full flex-col justify-end p-5 md:p-6">
                 <div className="max-w-[270px]">
                   <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--coral)]/90">
-                    Historia Atenea
+                    {getValueEyebrow(title, eyebrow)}
                   </p>
                   <h3 className="font-[family-name:var(--font-display)] text-[1.55rem] font-medium leading-none text-white">
                     {title}

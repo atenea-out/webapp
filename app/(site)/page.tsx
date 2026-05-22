@@ -12,6 +12,7 @@ import type { Metadata }     from 'next'
 import { getSiteSettings, getServices, getIndustries, getFounder, getTeam } from '@/lib/queries'
 import { getIcon } from '@/lib/icons'
 import { richTextToPlain } from '@/lib/lexical-to-react'
+import { resolveMediaUrl } from '@/lib/media-url'
 import type { Media } from '@/payload-types'
 
 export const metadata: Metadata = {
@@ -100,7 +101,7 @@ export default async function HomePage() {
       name: member.name,
       role: member.role,
       email: member.email,
-      photoUrl: photo?.url,
+      photoUrl: resolveMediaUrl(photo?.url),
       photoAlt: photo?.alt,
       summary: member.summary,
       detail: member.bio ? richTextToPlain(member.bio) : null,
@@ -138,7 +139,7 @@ export default async function HomePage() {
       <FundadoraPreview
         name={founder?.name}
         role={founder?.role}
-        photoUrl={founderPhoto?.url}
+        photoUrl={resolveMediaUrl(founderPhoto?.url)}
         photoAlt={founderPhoto?.alt}
         bioParagraphs={founderBioParagraphs}
         chips={founderChips}

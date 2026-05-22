@@ -75,6 +75,7 @@ export const Services: CollectionConfig = {
         { label: 'Administrativo / Maletín', value: 'Briefcase' },
         { label: 'Auditoría / Lupa', value: 'MagnifyingGlass' },
         { label: 'Legal / Balanza', value: 'Scales' },
+        { label: 'Activos fijos / Codigo', value: 'Barcode' },
       ],
     },
     {

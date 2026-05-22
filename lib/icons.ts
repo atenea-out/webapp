@@ -16,6 +16,7 @@ import {
   Lightbulb,
   Lock,
   Handshake,
+  Barcode,
 } from '@phosphor-icons/react/dist/ssr'
 import type { Icon } from '@phosphor-icons/react'
 
@@ -30,6 +31,7 @@ export const ICONS: Record<string, Icon> = {
   CurrencyDollar,
   Briefcase,
   MagnifyingGlass,
+  Barcode,
   // Services + Industries
   Scales,
   // Industries

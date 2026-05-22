@@ -15,7 +15,9 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:all": "npm run test && npm run test:e2e",
-    "seed": "node --import @swc-node/register/esm-register scripts/seed.ts"
+    "seed": "node --import @swc-node/register/esm-register scripts/seed.ts",
+    "seed:team": "node --import @swc-node/register/esm-register scripts/seed-team.ts",
+    "seed:service:activos": "node --import @swc-node/register/esm-register scripts/seed-service-activos.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.84.1",

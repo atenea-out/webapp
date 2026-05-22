@@ -7,12 +7,12 @@ export function AteneaAdminLogo() {
       <Image
         src="/logo.png"
         alt="Atenea Outsourcing"
-        width={208}
-        height={69}
+        width={280}
+        height={120}
         style={{
           display: 'block',
           height: 58,
-          maxWidth: 214,
+          maxWidth: 180,
           objectFit: 'contain',
           opacity: 0.92,
           width: 'auto',

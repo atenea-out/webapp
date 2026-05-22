@@ -3,9 +3,9 @@ import { CountUp } from '@/components/ui/CountUp'
 type Stat = { value: string; label: string; detail: string }
 
 const defaultStats: Stat[] = [
-  { value: '+20', label: 'Años de experiencia',  detail: 'Fundada en 2003' },
-  { value: '+5',  label: 'Líneas de servicio',    detail: 'Especializadas' },
-  { value: '99%', label: 'Satisfacción',          detail: 'De nuestros clientes' },
+  { value: '+20', label: 'Años de experiencia', detail: 'Fundada en 2003' },
+  { value: '+5', label: 'Líneas de servicio', detail: 'Especializadas' },
+  { value: '99%', label: 'Satisfacción', detail: 'De nuestros clientes' },
 ]
 
 export function StatsBar({ stats: statsProp }: { stats?: Stat[] | null } = {}) {
@@ -19,7 +19,7 @@ export function StatsBar({ stats: statsProp }: { stats?: Stat[] | null } = {}) {
             <div
               key={label}
               className={[
-                'relative h-[132px] md:h-[134px] lg:h-[150px] md:px-10 flex flex-col items-center justify-center text-center',
+                'relative h-[147px] md:h-[130px] lg:h-[124px] md:px-10 flex flex-col items-center justify-center text-center',
                 i > 0 && 'border-t md:border-t-0 md:border-l border-white/[0.08]',
               ].filter(Boolean).join(' ')}
             >

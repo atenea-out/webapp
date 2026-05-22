@@ -11,6 +11,7 @@ import type { TeamPreviewItem }  from '@/components/sections/FundadoraPreview'
 import type { Metadata }     from 'next'
 import { getSiteSettings, getServices, getIndustries, getFounder, getTeam } from '@/lib/queries'
 import { getIcon } from '@/lib/icons'
+import { richTextToPlain } from '@/lib/lexical-to-react'
 import type { Media } from '@/payload-types'
 
 export const metadata: Metadata = {
@@ -98,9 +99,14 @@ export default async function HomePage() {
     return {
       name: member.name,
       role: member.role,
+      email: member.email,
       photoUrl: photo?.url,
       photoAlt: photo?.alt,
       summary: member.summary,
+      detail: member.bio ? richTextToPlain(member.bio) : null,
+      credentials: member.shortCredentials?.map((c) => c.text).filter(Boolean) ?? null,
+      linkedin: member.linkedin,
+      isFounder: member.isFounder,
     }
   })
 

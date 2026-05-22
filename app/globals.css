@@ -2,22 +2,23 @@
 
 /* ─── ATENEA BRAND TOKENS ─── */
 :root {
-  /* Brand colors — extraídos del sitio oficial */
-  --navy:         #023044;   /* Primary — navbar, footer, hero, CTAs */
+  /* Brand colors — extraídos del sitio anterior y del arte de marca */
+  --navy:         #023044;   /* Pantone 540 C digitalizado desde marca/sitio anterior */
   --navy-mid:     #034060;   /* Hover del navy */
-  --navy-light:   #0a4a6e;   /* Acento azul claro */
+  --navy-light:   #0a4a6e;   /* Acento azul petróleo */
   --coral:        #ef625e;   /* Accent — 'a' del logo, hover, links */
   --coral-light:  #f2837f;   /* Hover del coral */
   --coral-muted:  rgba(239, 98, 94, 0.1);
   --coral-border: rgba(239, 98, 94, 0.3);
 
   /* Backgrounds */
-  --bg:           #F0F5FA;   /* Body background */
+  --bg:           #F0F5FA;   /* Body background del sitio anterior */
   --white:        #ffffff;   /* Cards, navbar */
   --bg-subtle:    #e8eef5;   /* Hover en cards */
+  --cream-light:  #F0F5FA;   /* Alias legacy para fondos de páginas internas */
 
   /* Text */
-  --cream:        #ebe6e2;   /* Texto sobre fondos oscuros */
+  --cream:        #ebe6e2;   /* Blanco de marca del logo, solo sobre fondos oscuros */
   --cream-dark:   #d4cdc8;   /* Bordes sobre oscuros */
   --gray:         #334155;   /* Body text sobre claro */
   --gray-mid:     #475569;   /* Texto secundario */

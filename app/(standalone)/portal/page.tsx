@@ -57,8 +57,8 @@ export default function PortalPage() {
           <Image
             src="/logo.png"
             alt="Atenea Outsourcing"
-            width={208}
-            height={69}
+            width={280}
+            height={120}
             className="h-[50px] w-auto object-contain opacity-95 transition-opacity hover:opacity-100"
             priority
           />
@@ -97,8 +97,8 @@ export default function PortalPage() {
             <Image
               src="/logo.png"
               alt="Atenea Outsourcing"
-              width={208}
-              height={69}
+              width={280}
+              height={120}
               className="h-[46px] w-auto object-contain"
               priority
             />

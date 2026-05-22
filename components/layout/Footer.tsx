@@ -75,8 +75,8 @@ export async function Footer() {
             <Image
               src="/logo.png"
               alt="Atenea Outsourcing"
-              width={130}
-              height={48}
+              width={140}
+              height={60}
               className="h-10 w-auto object-contain brightness-0 invert"
             />
           </div>

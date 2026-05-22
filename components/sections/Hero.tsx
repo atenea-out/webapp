@@ -35,7 +35,7 @@ type HeroProps = {
 
 /**
  * Composición financiera abstracta — consultora premium.
- * Integrada con el design system: coral #ef625e para la curva principal,
+ * Integrada con el design system: coral Pantone 178 U para la curva principal,
  * blanco sutil para la estructura. Geometría limpia, no dashboard genérico.
  */
 function FinancialComposition() {

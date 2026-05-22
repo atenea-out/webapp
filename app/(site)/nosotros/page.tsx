@@ -3,6 +3,7 @@ import { Medal, ShieldCheck, Handshake, Sparkle } from '@phosphor-icons/react/di
 import type { Metadata } from 'next'
 import { getSiteSettings, getTeam } from '@/lib/queries'
 import { richTextToPlain } from '@/lib/lexical-to-react'
+import { resolveMediaUrl } from '@/lib/media-url'
 import type { Media, Team } from '@/payload-types'
 
 export const metadata: Metadata = {
@@ -141,7 +142,7 @@ export default async function NosotrosPage() {
             <div className="grid grid-cols-1 gap-5">
               {visibleTeam.map((member, index) => {
                 const photo = getMemberPhoto(member)
-                const photoUrl = photo?.url ?? '/patricia.png'
+                const photoUrl = resolveMediaUrl(photo?.url) ?? '/patricia.png'
                 const photoAlt = photo?.alt || `${member.name} - ${member.role}`
                 const summary = member.summary || richTextToPlain(member.bio).slice(0, 180)
                 const chips = member.shortCredentials?.map((c) => c.text).filter(Boolean).slice(0, 3) ?? []

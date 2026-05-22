@@ -77,8 +77,8 @@ export function Navbar({
           <Image
             src="/logo.png"
             alt="Atenea Outsourcing"
-            width={208}
-            height={69}
+            width={280}
+            height={120}
             className="h-[46px] w-auto object-contain transition-opacity duration-200 group-hover:opacity-80 md:h-[50px]"
             priority
           />

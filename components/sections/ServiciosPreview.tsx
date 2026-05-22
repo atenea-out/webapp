@@ -35,7 +35,11 @@ function CornerMarks() {
   )
 }
 
-export function ServiciosPreview({ services }: { services: ServicePreviewItem[] }) {
+export function ServiciosPreview({
+  services,
+}: {
+  services: ServicePreviewItem[]
+}) {
   return (
     <section className="py-[var(--section-pad)] px-6 md:px-[60px] bg-white">
       <div className="max-w-[1280px] mx-auto">
@@ -101,6 +105,28 @@ export function ServiciosPreview({ services }: { services: ServicePreviewItem[] 
               )
             })}
           </div>
+
+          <AnimateIn delay={services.length * 60}>
+            <div className="border-x border-b border-[var(--navy)]/10 bg-[var(--cream)] px-6 py-6 md:px-8 lg:px-10">
+              <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+                <div className="max-w-[680px]">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--coral)] font-[family-name:var(--font-body)]">
+                    Portafolio completo
+                  </p>
+                  <p className="mt-2 font-[family-name:var(--font-display)] text-[22px] font-medium leading-tight text-[var(--navy)]">
+                    Conoce todos los servicios disponibles.
+                  </p>
+                </div>
+
+                <Link
+                  href="/servicios"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 border border-[var(--navy)] bg-[var(--navy)] px-6 text-[11px] font-medium uppercase tracking-[0.1em] text-white transition-all duration-200 hover:border-[var(--coral)] hover:bg-[var(--coral)] font-[family-name:var(--font-body)] md:flex-shrink-0"
+                >
+                  Ver todos los servicios <ArrowUpRight size={13} />
+                </Link>
+              </div>
+            </div>
+          </AnimateIn>
         </div>
       </div>
     </section>

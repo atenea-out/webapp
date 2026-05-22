@@ -158,6 +158,25 @@ async function main() {
       ],
       order: 6,
     },
+    {
+      title: 'Levantamiento y Control de Activos Fijos',
+      slug: 'levantamiento-control-activos-fijos',
+      number: '07',
+      icon: 'Barcode',
+      shortDescription:
+        'Levantamiento físico, etiquetado, conciliación y depuración de activos fijos para control patrimonial y auditorías.',
+      bullets: [
+        { text: 'Levantamiento físico y toma de inventario de activos fijos' },
+        { text: 'Etiquetado y codificación de activos' },
+        { text: 'Conciliación entre el inventario físico y registros contables' },
+        { text: 'Depuración y actualización de bases de datos' },
+        { text: 'Clasificación y validación de activos' },
+        { text: 'Regularización de diferencias e identificación de activos obsoletos o no localizados' },
+        { text: 'Soporte para auditorías internas y externas' },
+        { text: 'Carga y actualización de información en sistemas de activos fijos del cliente' },
+      ],
+      order: 7,
+    },
   ]
 
   for (const s of services) {

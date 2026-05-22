@@ -91,7 +91,7 @@ export default async function ServiciosPage() {
         </div>
       </section>
 
-      <section className="py-16 px-6 md:px-[60px] bg-white border-t border-[#e2e8f0]">
+      <section className="py-16 px-6 md:px-[60px] bg-[var(--cream)] border-t border-[#e2e8f0]">
         <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <p className="font-[family-name:var(--font-display)] text-[22px] font-medium text-[var(--navy)]">

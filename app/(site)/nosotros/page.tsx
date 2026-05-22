@@ -1,10 +1,9 @@
 import Image from 'next/image'
-import { LinkedinLogo, Medal, ShieldCheck, Handshake, Sparkle } from '@phosphor-icons/react/dist/ssr'
+import { Medal, ShieldCheck, Handshake, Sparkle } from '@phosphor-icons/react/dist/ssr'
 import type { Metadata } from 'next'
-import { getFounder, getSiteSettings } from '@/lib/queries'
-import { getIcon } from '@/lib/icons'
-import { RichText, richTextToPlain } from '@/lib/lexical-to-react'
-import type { Media } from '@/payload-types'
+import { getSiteSettings, getTeam } from '@/lib/queries'
+import { richTextToPlain } from '@/lib/lexical-to-react'
+import type { Media, Team } from '@/payload-types'
 
 export const metadata: Metadata = {
   title: 'Nosotros',
@@ -16,8 +15,12 @@ export const revalidate = 60
 
 const valueIcons = [Medal, ShieldCheck, Handshake, Sparkle]
 
+function getMemberPhoto(member: Team) {
+  return member.photo && typeof member.photo !== 'number' ? (member.photo as Media) : null
+}
+
 export default async function NosotrosPage() {
-  const [founder, settings] = await Promise.all([getFounder(), getSiteSettings()])
+  const [settings, team] = await Promise.all([getSiteSettings(), getTeam()])
 
   const missionTitle = settings.nosotrosMissionTitle ?? 'Simplicidad al servicio de tu crecimiento'
   const missionParagraphs =
@@ -28,23 +31,7 @@ export default async function NosotrosPage() {
   const valores =
     settings.nosotrosValores?.map((v) => ({ title: v.title, desc: v.desc })) ?? []
 
-  const bioLongParagraphs =
-    settings.fundadoraBioLong?.map((p) => p.text).filter(Boolean) ?? []
-
-  const founderName = founder?.name ?? 'Ing. Patricia Rojas Túquerrez'
-  const founderRole = founder?.role ?? 'Gerente General · Fundadora'
-  const founderPhoto =
-    founder?.photo && typeof founder.photo !== 'number'
-      ? (founder.photo as Media)
-      : null
-  const founderPhotoUrl = founderPhoto?.url ?? '/patricia.png'
-  const founderPhotoAlt = founderPhoto?.alt || `${founderName} — ${founderRole}`
-  const credentials = founder?.credentials ?? []
-  const linkedinHref =
-    founder?.linkedin ?? 'https://www.linkedin.com/in/atenea-outsourcing-b0a850326/'
-
-  // Si no hay párrafos en SiteSettings, intentar derivar del richText del fundador
-  const bioRichTextText = founder?.bio ? richTextToPlain(founder.bio) : ''
+  const visibleTeam = team
 
   return (
     <>
@@ -112,102 +99,108 @@ export default async function NosotrosPage() {
         </div>
       </section>
 
-      {/* Fundadora */}
-      {founder && (
-        <section className="py-20 px-6 md:px-[60px] bg-[var(--bg)]">
-          <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* Photo */}
-            <div className="relative max-w-[440px] mx-auto lg:mx-0">
-              <div className="aspect-[4/5] overflow-hidden relative">
-                <Image
-                  src={founderPhotoUrl}
-                  alt={founderPhotoAlt}
-                  fill
-                  className="object-cover object-top"
-                  sizes="(max-width: 1024px) 90vw, 440px"
-                />
-                <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[var(--navy)]/90 to-transparent">
-                  <p className="font-[family-name:var(--font-display)] text-[16px] font-medium text-white">
-                    {founderName}
-                  </p>
-                  <p className="text-[11px] tracking-[0.08em] text-[var(--coral)] mt-0.5 font-[family-name:var(--font-body)]">
-                    {founderRole}
-                  </p>
-                </div>
-              </div>
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-[var(--coral)]" />
-            </div>
-
-            {/* Bio */}
-            <div>
-              <span className="section-tag">Fundadora</span>
+      {visibleTeam.length > 0 && (
+        <section className="bg-[var(--bg)] px-6 py-20 md:px-[60px]">
+          <div className="hidden" />
+          <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-10 lg:grid-cols-[0.88fr_1.12fr] xl:grid-cols-[400px_1fr]">
+            <aside className="lg:self-start">
+              <span className="section-tag">Equipo Atenea</span>
               <h2
-                className="font-[family-name:var(--font-display)] font-medium text-[var(--navy)] leading-[1.2] mb-5 mt-1"
-                style={{ fontSize: 'clamp(26px,3vw,38px)' }}
+                className="mt-2 font-[family-name:var(--font-display)] font-medium leading-[1.1] text-[var(--navy)]"
+                style={{ fontSize: 'clamp(30px,3.5vw,48px)' }}
               >
-                {founderName}
+                Una red experta alrededor de cada decisión.
               </h2>
-              <div className="divider" />
-              <div className="space-y-4 mb-8">
-                {bioLongParagraphs.length > 0 ? (
-                  bioLongParagraphs.map((text, i) => (
-                    <p key={i} className="text-[15px] text-[var(--gray-mid)] leading-[1.8]">
-                      {text}
-                    </p>
-                  ))
-                ) : founder.bio ? (
-                  <RichText
-                    data={founder.bio}
-                    className="prose-atenea text-[15px] text-[var(--gray-mid)] leading-[1.8]"
-                  />
-                ) : bioRichTextText ? (
-                  <p className="text-[15px] text-[var(--gray-mid)] leading-[1.8]">
-                    {bioRichTextText}
-                  </p>
-                ) : null}
+              <div className="my-6 h-px w-full bg-[#d8e2eb]">
+                <div className="h-px w-20 bg-[var(--coral)]" />
               </div>
-
-              {credentials.length > 0 && (
-                <div className="space-y-0 mb-8 border border-[#e2e8f0]">
-                  {credentials.map((c, i) => {
-                    const Icon = getIcon(c.icon)
-                    return (
-                      <div
-                        key={c.id ?? i}
-                        className={`flex items-start gap-4 p-4 ${i < credentials.length - 1 ? 'border-b border-[#e2e8f0]' : ''}`}
-                      >
-                        <div className="w-9 h-9 bg-[var(--coral-muted)] border border-[var(--coral-border)] flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Icon size={16} color="var(--coral)" weight="duotone" />
-                        </div>
-                        <div>
-                          <p className="text-[10px] tracking-[0.15em] uppercase text-[var(--gray-light)] mb-0.5 font-[family-name:var(--font-body)]">
-                            {c.label}
-                          </p>
-                          <p className="text-[13px] font-medium text-[var(--navy)] leading-[1.4] font-[family-name:var(--font-body)]">
-                            {c.value}
-                          </p>
-                          {c.sub && (
-                            <p className="text-[12px] text-[var(--gray-mid)] font-[family-name:var(--font-body)] mt-0.5">
-                              {c.sub}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    )
-                  })}
+              <p className="max-w-[380px] text-[15px] leading-[1.85] text-[var(--gray-mid)]">
+                Perfiles complementarios que integran contabilidad, tributación, procesos y
+                control financiero con una forma de trabajo cercana, rigurosa y confidencial.
+              </p>
+              <div className="hidden">
+                <div className="bg-white p-5">
+                  <p className="font-[family-name:var(--font-display)] text-[34px] leading-none text-[var(--navy)]">
+                    {String(visibleTeam.length).padStart(2, '0')}
+                  </p>
+                  <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--gray-light)]">
+                    Especialistas
+                  </p>
                 </div>
-              )}
+                <div className="bg-white p-5">
+                  <p className="font-[family-name:var(--font-display)] text-[34px] leading-none text-[var(--navy)]">
+                    360
+                  </p>
+                  <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--gray-light)]">
+                    Visión integral
+                  </p>
+                </div>
+              </div>
+            </aside>
 
-              {linkedinHref && (
-                <a
-                  href={linkedinHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 border border-[#e2e8f0] text-[var(--gray-mid)] hover:text-[var(--navy)] hover:border-[var(--navy)] text-[12px] font-medium tracking-[0.06em] uppercase transition-all duration-200 font-[family-name:var(--font-body)]"
-                >
-                  <LinkedinLogo size={16} weight="duotone" /> Ver en LinkedIn
-                </a>
-              )}
+            <div className="grid grid-cols-1 gap-5">
+              {visibleTeam.map((member, index) => {
+                const photo = getMemberPhoto(member)
+                const photoUrl = photo?.url ?? '/patricia.png'
+                const photoAlt = photo?.alt || `${member.name} - ${member.role}`
+                const summary = member.summary || richTextToPlain(member.bio).slice(0, 180)
+                const chips = member.shortCredentials?.map((c) => c.text).filter(Boolean).slice(0, 3) ?? []
+
+                return (
+                  <article
+                    key={member.id}
+                    className="group grid grid-cols-1 border border-[#d8e2eb] bg-white transition-colors duration-300 hover:border-[#cbd8e3] hover:bg-[#fbfcfd] md:grid-cols-[220px_1fr]"
+                  >
+                    <div className="relative h-[300px] overflow-hidden border-b border-[#d8e2eb] bg-[var(--navy)] md:h-full md:min-h-[260px] md:border-b-0 md:border-r">
+                      <Image
+                        src={photoUrl}
+                        alt={photoAlt}
+                        fill
+                        className="object-cover object-top grayscale transition duration-500 group-hover:grayscale-0 group-hover:scale-[1.02]"
+                        sizes="(max-width: 768px) 100vw, 230px"
+                      />
+                      <div className="absolute inset-0 bg-[var(--navy)]/42 transition duration-500 group-hover:bg-[var(--navy)]/18" />
+                    </div>
+
+                    <div className="relative flex min-h-[260px] flex-col p-6 sm:p-8 lg:p-9">
+                      <div className="mb-7 flex items-start justify-between gap-6">
+                        <div>
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--coral)]">
+                            {member.isFounder ? 'Fundadora · Dirección' : 'Equipo especialista'}
+                          </p>
+                          <h3 className="mt-3 font-[family-name:var(--font-display)] text-[clamp(26px,3vw,34px)] font-medium leading-tight text-[var(--navy)]">
+                            {member.name}
+                          </h3>
+                        </div>
+                        <span className="shrink-0 text-[11px] font-semibold tracking-[0.14em] text-[var(--gray-light)]">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                      </div>
+
+                      <p className="max-w-[680px] text-[11px] font-semibold uppercase leading-[1.6] tracking-[0.12em] text-[var(--gray-mid)]">
+                        {member.role}
+                      </p>
+                      {summary && (
+                        <p className="mt-5 max-w-[720px] text-[14px] leading-[1.85] text-[var(--gray-mid)]">
+                          {summary}
+                        </p>
+                      )}
+                      {chips.length > 0 && (
+                        <div className="mt-auto flex flex-wrap gap-2 pt-7">
+                          {chips.map((chip) => (
+                            <span
+                              key={chip}
+                              className="border border-[#d8e2eb] bg-[var(--bg)] px-3 py-2 text-[10px] font-semibold tracking-[0.08em] text-[var(--gray-mid)]"
+                            >
+                              {chip}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                )
+              })}
             </div>
           </div>
         </section>

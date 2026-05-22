@@ -91,7 +91,7 @@ export default async function ServicioPage({ params }: Props) {
           </div>
 
           <div className="lg:col-span-1">
-            <div className="bg-white border border-[#e2e8f0] p-8 sticky top-24">
+            <div className="bg-[var(--cream)] border border-[#e2e8f0] p-8 sticky top-24">
               <div className="w-8 h-0.5 bg-[var(--coral)] mb-5" />
               <h3 className="font-[family-name:var(--font-display)] text-[20px] font-medium text-[var(--navy)] mb-3 leading-[1.3]">
                 {settingText(settings, 'serviceDetailCtaTitle', '¿Te interesa este servicio?')}

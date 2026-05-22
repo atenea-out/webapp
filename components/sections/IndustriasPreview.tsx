@@ -121,9 +121,9 @@ export function IndustriasPreview({
           </AnimateIn>
 
           <AnimateIn delay={80}>
-            <article className="relative flex min-h-[420px] h-full flex-col overflow-hidden bg-[var(--bg)] p-8 md:p-12">
+            <article className="relative flex min-h-[420px] h-full flex-col overflow-hidden bg-[var(--cream)] p-8 md:p-12">
               <div
-                className="pointer-events-none absolute inset-0 opacity-[0.35]"
+                className="pointer-events-none absolute inset-0 opacity-[0.22]"
                 style={{
                   backgroundImage:
                     'linear-gradient(rgba(6,58,71,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(6,58,71,.07) 1px, transparent 1px)',

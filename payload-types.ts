@@ -311,7 +311,7 @@ export interface Service {
     };
     [k: string]: unknown;
   } | null;
-  icon?: ('BookOpen' | 'Users' | 'CurrencyDollar' | 'Briefcase' | 'MagnifyingGlass' | 'Scales') | null;
+  icon?: ('BookOpen' | 'Users' | 'CurrencyDollar' | 'Briefcase' | 'MagnifyingGlass' | 'Scales' | 'Barcode') | null;
   /**
    * Bullets que se muestran en la página de detalle del servicio
    */
@@ -856,7 +856,7 @@ export interface SiteSetting {
   teamSectionTitle?: string | null;
   teamSectionDescription?: string | null;
   /**
-   * Párrafos de la sección Fundadora en el home
+   * Párrafos usados cuando el home muestra a la fundadora destacada.
    */
   fundadoraBioShort?:
     | {

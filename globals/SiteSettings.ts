@@ -350,13 +350,13 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
-          label: 'Home — Fundadora',
+          label: 'Home — Equipo',
           fields: [
             {
               name: 'teamSectionMode',
               type: 'select',
-              label: 'Modo de la sección',
-              defaultValue: 'founder',
+              label: 'Modo de la sección de equipo',
+              defaultValue: 'team',
               options: [
                 { label: 'Fundadora destacada', value: 'founder' },
                 { label: 'Conoce nuestro equipo', value: 'team' },
@@ -366,26 +366,26 @@ export const SiteSettings: GlobalConfig = {
               name: 'teamSectionEyebrow',
               type: 'text',
               label: 'Eyebrow de la sección',
-              defaultValue: 'Fundadora',
+              defaultValue: 'Equipo Atenea',
             },
             {
               name: 'teamSectionTitle',
               type: 'text',
-              label: 'Título de la sección en modo equipo',
-              defaultValue: 'Conoce nuestro equipo',
+              label: 'Título de la sección',
+              defaultValue: 'Especialistas con criterio y cercanía.',
             },
             {
               name: 'teamSectionDescription',
               type: 'textarea',
-              label: 'Descripción de la sección en modo equipo',
+              label: 'Descripción de la sección',
               defaultValue:
-                'Un equipo cercano y especializado que combina criterio financiero, cumplimiento y acompañamiento humano.',
+                'Un equipo contable, tributario y financiero que acompaña cada decisión con rigor técnico, confidencialidad y trato humano.',
             },
             {
               name: 'fundadoraBioShort',
               type: 'array',
               label: 'Bio corta (home) — párrafos',
-              admin: { description: 'Párrafos de la sección Fundadora en el home' },
+              admin: { description: 'Párrafos usados cuando el home muestra a la fundadora destacada.' },
               fields: [
                 { name: 'text', type: 'textarea', required: true },
               ],

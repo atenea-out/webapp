@@ -10,10 +10,13 @@ import { AteneaAdminLogo } from '@/components/payload/AteneaAdminLogo'
 import { AteneaDashboardIntro } from '@/components/payload/AteneaDashboardIntro'
 import { AteneaLoginIntro } from '@/components/payload/AteneaLoginIntro'
 import { AteneaLogoutButton } from '@/components/payload/AteneaLogoutButton'
+import { AteneaColorField, AteneaThemePalette } from '@/components/payload/AteneaThemePalette'
 import { AteneaUserAvatar } from '@/components/payload/AteneaUserAvatar'
 
 export const importMap = {
   '@/components/payload/AteneaAdminLogo#AteneaAdminLogo': AteneaAdminLogo,
+  '@/components/payload/AteneaThemePalette#AteneaColorField': AteneaColorField,
+  '@/components/payload/AteneaThemePalette#AteneaThemePalette': AteneaThemePalette,
   '@/components/payload/AteneaDashboardIntro#AteneaDashboardIntro': AteneaDashboardIntro,
   '@/components/payload/AteneaLoginIntro#AteneaLoginIntro': AteneaLoginIntro,
   '@/components/payload/AteneaLogoutButton#AteneaLogoutButton': AteneaLogoutButton,

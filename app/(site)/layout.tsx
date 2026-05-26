@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { getSiteSettings, getNavigation } from '@/lib/queries'
+import { getThemeStyle } from '@/lib/theme'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -48,9 +49,11 @@ export const metadata: Metadata = {
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const [settings, nav] = await Promise.all([getSiteSettings(), getNavigation()])
+  const themeStyle = getThemeStyle(settings)
+
   return (
     <html lang="es" className={`${playfair.variable} ${dmSans.variable}`}>
-      <body suppressHydrationWarning>
+      <body suppressHydrationWarning style={themeStyle}>
         <Navbar
           items={nav.items}
           ctaLabel={nav.ctaLabel}

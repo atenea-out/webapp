@@ -1,6 +1,13 @@
 import type { GlobalConfig } from 'payload'
 import { editorOrAdmin, publicRead } from '@/lib/access'
 
+const hexColor = (value: unknown) => {
+  if (!value) return true
+  return /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(String(value))
+    ? true
+    : 'Usa un color HEX valido. Ej: #023044'
+}
+
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
   access: {
@@ -35,6 +42,197 @@ export const SiteSettings: GlobalConfig = {
               type: 'upload',
               relationTo: 'media',
               label: 'Logo',
+            },
+          ],
+        },
+        {
+          label: 'Identidad visual',
+          fields: [
+            {
+              type: 'collapsible',
+              label: 'Sistema de color',
+              admin: {
+                initCollapsed: false,
+                description:
+                  'Tokens globales de marca. Cambian el color del sitio sin editar componentes individuales.',
+              },
+              fields: [
+                {
+                  name: 'themePaletteGuide',
+                  type: 'ui',
+                  admin: {
+                    components: {
+                      Field: {
+                        path: '@/components/payload/AteneaThemePalette#AteneaThemePalette',
+                      },
+                    },
+                  },
+                },
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'themeNavy',
+                      type: 'text',
+                      label: 'Principal / Pantone 540 C',
+                      defaultValue: '#023044',
+                      validate: hexColor,
+                      admin: {
+                        custom: {
+                          description: 'Color base de marca. Recomendado: #023044.',
+                        },
+                        width: '50%',
+                        components: {
+                          Field: {
+                            path: '@/components/payload/AteneaThemePalette#AteneaColorField',
+                          },
+                        },
+                      },
+                    },
+                    {
+                      name: 'themeNavyMid',
+                      type: 'text',
+                      label: 'Principal hover',
+                      defaultValue: '#034060',
+                      validate: hexColor,
+                      admin: {
+                        custom: {
+                          description: 'Variacion para hover y estados activos.',
+                        },
+                        width: '50%',
+                        components: {
+                          Field: {
+                            path: '@/components/payload/AteneaThemePalette#AteneaColorField',
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'themeCoral',
+                      type: 'text',
+                      label: 'Acento / Pantone 178 U',
+                      defaultValue: '#ef625e',
+                      validate: hexColor,
+                      admin: {
+                        custom: {
+                          description: 'Color de CTAs, enlaces y detalles de enfasis.',
+                        },
+                        width: '50%',
+                        components: {
+                          Field: {
+                            path: '@/components/payload/AteneaThemePalette#AteneaColorField',
+                          },
+                        },
+                      },
+                    },
+                    {
+                      name: 'themeCoralLight',
+                      type: 'text',
+                      label: 'Acento hover',
+                      defaultValue: '#f2837f',
+                      validate: hexColor,
+                      admin: {
+                        custom: {
+                          description: 'Variacion del acento para interacciones.',
+                        },
+                        width: '50%',
+                        components: {
+                          Field: {
+                            path: '@/components/payload/AteneaThemePalette#AteneaColorField',
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'themeBackground',
+                      type: 'text',
+                      label: 'Fondo claro',
+                      defaultValue: '#F0F5FA',
+                      validate: hexColor,
+                      admin: {
+                        custom: {
+                          description: 'Fondo general claro del sitio.',
+                        },
+                        width: '50%',
+                        components: {
+                          Field: {
+                            path: '@/components/payload/AteneaThemePalette#AteneaColorField',
+                          },
+                        },
+                      },
+                    },
+                    {
+                      name: 'themeCream',
+                      type: 'text',
+                      label: 'Crema de marca',
+                      defaultValue: '#ebe6e2',
+                      validate: hexColor,
+                      admin: {
+                        custom: {
+                          description: 'Color suave para bloques premium de apoyo.',
+                        },
+                        width: '50%',
+                        components: {
+                          Field: {
+                            path: '@/components/payload/AteneaThemePalette#AteneaColorField',
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'themeText',
+                      type: 'text',
+                      label: 'Texto principal',
+                      defaultValue: '#334155',
+                      validate: hexColor,
+                      admin: {
+                        custom: {
+                          description: 'Texto sobre fondos claros.',
+                        },
+                        width: '50%',
+                        components: {
+                          Field: {
+                            path: '@/components/payload/AteneaThemePalette#AteneaColorField',
+                          },
+                        },
+                      },
+                    },
+                    {
+                      name: 'themeTextMuted',
+                      type: 'text',
+                      label: 'Texto secundario',
+                      defaultValue: '#475569',
+                      validate: hexColor,
+                      admin: {
+                        custom: {
+                          description: 'Parrafos, detalles y textos de soporte.',
+                        },
+                        width: '50%',
+                        components: {
+                          Field: {
+                            path: '@/components/payload/AteneaThemePalette#AteneaColorField',
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },

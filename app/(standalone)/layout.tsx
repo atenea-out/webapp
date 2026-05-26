@@ -1,6 +1,8 @@
 import { DM_Sans, Playfair_Display } from 'next/font/google'
 import type { Metadata } from 'next'
 import '../globals.css'
+import { getSiteSettings } from '@/lib/queries'
+import { getThemeStyle } from '@/lib/theme'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -26,10 +28,14 @@ export const metadata: Metadata = {
   },
 }
 
-export default function StandaloneLayout({ children }: { children: React.ReactNode }) {
+export default async function StandaloneLayout({ children }: { children: React.ReactNode }) {
+  const settings = await getSiteSettings()
+
   return (
     <html lang="es" className={`${playfair.variable} ${dmSans.variable}`}>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning style={getThemeStyle(settings)}>
+        {children}
+      </body>
     </html>
   )
 }

@@ -387,7 +387,7 @@ export const SiteSettings: GlobalConfig = {
               name: 'heroMediaMode',
               type: 'select',
               label: 'Fondo del hero',
-              defaultValue: 'video',
+              defaultValue: 'image',
               options: [
                 { label: 'Video humano + overlay financiero', value: 'video' },
                 { label: 'Imagen humana', value: 'image' },
@@ -407,15 +407,16 @@ export const SiteSettings: GlobalConfig = {
               name: 'heroPosterSrc',
               type: 'text',
               label: 'Hero poster/fallback URL',
-              defaultValue: '/assets/media/hero-atenea-poster.jpg',
+              defaultValue: '/assets/media/hero-atenea-still-retouched.jpg',
               admin: {
-                description: 'Imagen de respaldo para carga lenta o mobile. Ej: /assets/media/hero-atenea-poster.jpg',
+                description: 'Imagen de respaldo para carga lenta o mobile. Ej: /assets/media/hero-atenea-still-retouched.jpg',
               },
             },
             {
               name: 'heroBackgroundImageSrc',
               type: 'text',
               label: 'Hero imagen de fondo URL',
+              defaultValue: '/assets/media/hero-atenea-still-retouched.jpg',
               admin: {
                 description: 'Se usa cuando el modo del hero es Imagen humana.',
               },
@@ -435,7 +436,7 @@ export const SiteSettings: GlobalConfig = {
             {
               name: 'heroShowFinancialOverlay',
               type: 'checkbox',
-              label: 'Mostrar gráfico financiero sutil sobre el video',
+              label: 'Mostrar gráfico financiero sutil en modo abstracto',
               defaultValue: true,
             },
             {

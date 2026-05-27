@@ -257,7 +257,7 @@ export function Hero({
 
       {activeMediaMode === 'image' && backgroundImageSrc && (
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-70"
+          className="absolute inset-0 bg-cover bg-center opacity-100"
           style={{ backgroundImage: `url("${backgroundImageSrc}")` }}
           aria-hidden="true"
         />
@@ -267,7 +267,7 @@ export function Hero({
         <>
           <div
             className="absolute inset-0 bg-[var(--navy)]"
-            style={{ opacity: heroOverlayOpacity }}
+            style={{ opacity: activeMediaMode === 'image' ? Math.min(Math.max(heroOverlayOpacity, 0.24), 0.32) : heroOverlayOpacity }}
             aria-hidden="true"
           />
           <div
@@ -276,10 +276,20 @@ export function Hero({
               background:
                 activeMediaMode === 'video'
                   ? 'linear-gradient(90deg, rgba(2,48,68,0.9) 0%, rgba(2,48,68,0.72) 32%, rgba(2,48,68,0.3) 56%, rgba(2,48,68,0.05) 100%)'
-                  : 'linear-gradient(90deg, var(--navy) 0%, rgba(2,48,68,0.6) 50%, rgba(2,48,68,0.22) 100%)',
+                  : 'linear-gradient(90deg, rgba(2,48,68,0.9) 0%, rgba(2,48,68,0.68) 31%, rgba(2,48,68,0.34) 57%, rgba(2,48,68,0.12) 100%)',
             }}
             aria-hidden="true"
           />
+          {activeMediaMode === 'image' && (
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  'radial-gradient(ellipse at 16% 82%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 18%, transparent 40%)',
+              }}
+              aria-hidden="true"
+            />
+          )}
         </>
       )}
 

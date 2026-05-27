@@ -92,7 +92,6 @@ h1, h2, h3, h4 {
 .animate-fade-in   { animation: fadeIn    0.5s  ease both; }
 .animate-slide-right { animation: slideRight 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .animate-count-up  { animation: countUp   0.7s  cubic-bezier(0.16, 1, 0.3, 1) both; }
-
 /* Scroll-triggered: elementos comienzan ocultos, JS agrega .is-visible */
 .reveal {
   opacity: 0;

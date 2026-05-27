@@ -44,7 +44,7 @@ const defaultValores: Valor[] = [
   {
     title: 'Compromiso',
     description: 'Relaciones de largo plazo basadas en resultados reales y confianza mutua.',
-    imgSrc: '/assets/media/images/quienes-compromiso.png',
+    imgSrc: '/assets/media/images/quienes-compromiso-equipo.jpg',
     eyebrow: 'Relación de largo plazo',
   },
   {

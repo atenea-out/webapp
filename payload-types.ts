@@ -801,7 +801,7 @@ export interface SiteSetting {
    */
   heroVideoSrc?: string | null;
   /**
-   * Imagen de respaldo para carga lenta o mobile. Ej: /assets/media/hero-atenea-poster.jpg
+   * Imagen de respaldo para carga lenta o mobile. Ej: /assets/media/hero-atenea-still-retouched.jpg
    */
   heroPosterSrc?: string | null;
   /**

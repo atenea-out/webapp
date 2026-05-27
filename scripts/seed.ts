@@ -476,9 +476,10 @@ async function main() {
       heroTitle: 'Sabiduría frente a los {highlight} empresariales',
       heroHighlight: 'desafíos',
       heroSubtitle: 'En Atenea, simplificamos lo complejo para que tú te enfoques en crecer.',
-      heroMediaMode: 'video',
+      heroMediaMode: 'image',
       heroVideoSrc: '/assets/media/hero-atenea.mp4',
-      heroPosterSrc: '/assets/media/hero-atenea-poster.jpg',
+      heroPosterSrc: '/assets/media/hero-atenea-still-retouched.jpg',
+      heroBackgroundImageSrc: '/assets/media/hero-atenea-still-retouched.jpg',
       heroOverlayOpacity: 0.3,
       heroShowFinancialOverlay: true,
       heroCtaPrimaryLabel: 'Nuestros Servicios',
@@ -523,7 +524,7 @@ async function main() {
           title: 'Compromiso',
           description: 'Relaciones de largo plazo basadas en resultados reales y confianza mutua.',
           imageUrl:
-            '/assets/media/images/quienes-compromiso.png',
+            '/assets/media/images/quienes-compromiso-equipo.jpg',
         },
         {
           title: 'Innovación',
